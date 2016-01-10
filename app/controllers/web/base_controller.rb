@@ -22,7 +22,7 @@ class Web::BaseController < ApplicationController
 
   protected
     def authenticate
-      redirect_to "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{Setting.key[:wechat][:appid]}&redirect_uri=http%3A%2F%2Fluggagep.com%2Fweb%2Fhome&response_type=code&scope=snsapi_base&state=authenticate#wechat_redirect" unless session['user']
+      redirect_to "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{Setting.key[:wechat][:appid]}&redirect_uri=http%3A%2F%2Fluggagep.com%2Fweb%2Fsign_in&response_type=code&scope=snsapi_base&state=authenticate#wechat_redirect" unless session['user']
     end
 
     def set_current_user
