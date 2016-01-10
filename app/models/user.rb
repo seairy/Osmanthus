@@ -15,9 +15,9 @@ class User < ActiveRecord::Base
       http.ssl_version = :SSLv3
       http.request(request)
     end.body)
-    user.nickname = response['nickname'] if user.nickname.blank?
-    user.remote_portrait_url = response['headimgurl'] if user.portrait.blank?
-    user.save!
+    self.nickname = response['nickname'] if self.nickname.blank?
+    self.remote_portrait_url = response['headimgurl'] if self.portrait.blank?
+    self.save!
   end
 
   class << self
