@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   include Identifierable, AASM
+  mount_uploader :portrait, UserPortraitUploader
   aasm column: 'state' do
     state :unactivated
     state :activated, initial: true
@@ -14,7 +15,9 @@ class User < ActiveRecord::Base
       http.ssl_version = :SSLv3
       http.request(request)
     end.body)
-    Rails.logger.info "**************************** response: #{response}"
+    user.nickname = response['nickname'] if user.nickname.blank?
+    user.remote_portrait_url = response['headimgurl'] if user.portrait.blank?
+    user.save!
   end
 
   class << self

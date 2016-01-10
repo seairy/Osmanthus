@@ -256,7 +256,7 @@ DEPENDENCIES
   capistrano-rails (~> 1.1.2)
   capistrano-rvm (~> 0.1.2)
   carrierwave (~> 0.10.0)
-  carrierwave-aliyun (~> 0.3.3)
+  carrierwave-aliyun (~> 0.3.6)
   carrierwave-imageoptimizer (~> 1.2.1)
   coffee-rails (~> 4.1.0)
   database_cleaner (~> 1.4.0)
