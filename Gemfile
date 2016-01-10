@@ -18,7 +18,6 @@ gem 'carrierwave-aliyun', '~> 0.3.3'
 gem 'carrierwave-imageoptimizer', '~> 1.2.1'
 gem 'sunspot_rails', '~> 2.1.1'
 gem 'sunspot_solr', '~> 2.1.1'
-gem 'ckeditor', '~> 4.1.1'
 gem 'geocoder', '~> 1.2.6'
 gem 'faker', '~> 1.4.3'
 
