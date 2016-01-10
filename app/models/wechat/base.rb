@@ -35,5 +35,15 @@ class Wechat::Base < ActiveRecord::Base
         http.request(request)
       end.body)
     end
+
+    def find_basic_attributes options = {}
+      uri = URI("https://api.weixin.qq.com/sns/userinfo?access_token=#{options[:access_token]}&openid=#{options[:open_id]}&lang=zh_CN")
+      request = Net::HTTP::Get.new(uri)
+      JSON.parse(response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        http.ssl_version = :SSLv3
+        http.request(request)
+      end.body)
+    end
   end
 end

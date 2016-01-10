@@ -8,16 +8,11 @@ class User < ActiveRecord::Base
   end
 
   def update_basic_attributes_from_wechat options = {}
-    uri = URI("https://api.weixin.qq.com/sns/userinfo?access_token=#{options[:access_token]}&openid=#{options[:open_id]}&lang=zh_CN")
-    request = Net::HTTP::Get.new(uri)
-    response = JSON.parse(response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-      http.ssl_version = :SSLv3
-      http.request(request)
-    end.body)
-    self.nickname = response['nickname'] if self.nickname.blank?
-    self.remote_portrait_url = response['headimgurl'] if self.portrait.blank?
-    self.save!
+    Wechat::Base.find_basic_attributes(options).tap do |base_attributes|
+      self.nickname = base_attributes['nickname'] if self.nickname.blank?
+      self.remote_portrait_url = base_attributes['headimgurl'] if self.portrait.blank?
+      self.save!
+    end
   end
 
   class << self
