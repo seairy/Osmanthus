@@ -6,6 +6,6 @@ class Web::SessionsController < Web::BaseController
   def create
     user = User.find_or_create_by_open_id(Wechat::Base.find_open_id(params[:code]))
     session[:user] = { id: user.id }
-    redirect_to wechat_dashboard_path
+    redirect_to home_path
   end
 end
