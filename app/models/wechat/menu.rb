@@ -11,6 +11,14 @@ class Wechat::Menu < Wechat::Base
               "url" => "http://luggagep.com/web/home"
             }]
           },
+          "name" => "调试工具",
+          "sub_button" =>[
+            {  
+              "type" => "view",
+              "name" => "清除会话",
+              "url" => "http://luggagep.com/web/sign_out"
+            }]
+          },
           {  
             "name" => "关于我们",
             "sub_button" => [

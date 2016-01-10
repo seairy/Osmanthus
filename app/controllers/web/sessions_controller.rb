@@ -11,4 +11,9 @@ class Web::SessionsController < Web::BaseController
     end
     redirect_to web_home_path
   end
+
+  def destroy
+    reset_session
+    redirect_to web_home_path
+  end
 end
