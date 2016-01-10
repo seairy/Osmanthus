@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   end
 
   def update_basic_attributes_from_wechat options = {}
-    uri = URI("https://api.weixin.qq.com/sns/userinfo?access_token=#{options[:access_token]}&openid=#{options[:openid]}&lang=zh_CN")
+    uri = URI("https://api.weixin.qq.com/sns/userinfo?access_token=#{options[:access_token]}&openid=#{options[:open_id]}&lang=zh_CN")
     request = Net::HTTP::Get.new(uri)
     response = JSON.parse(response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
