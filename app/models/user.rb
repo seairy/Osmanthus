@@ -6,6 +6,17 @@ class User < ActiveRecord::Base
     state :prohibited
   end
 
+  def update_basic_attributes_from_wechat options = {}
+    uri = URI("https://api.weixin.qq.com/sns/userinfo?access_token=#{options[:access_token]}&openid=#{options[:openid]}&lang=zh_CN")
+    request = Net::HTTP::Get.new(uri)
+    response = JSON.parse(response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      http.ssl_version = :SSLv3
+      http.request(request)
+    end.body)
+    Rails.logger.info "**************************** response: #{response}"
+  end
+
   class << self
     def find_or_create_by_open_id open_id
       where(open_id: open_id).first.tap do |user|

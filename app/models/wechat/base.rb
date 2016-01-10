@@ -26,14 +26,14 @@ class Wechat::Base < ActiveRecord::Base
       first
     end
 
-    def find_open_id code
+    def find_authorization_data code
       uri = URI("https://api.weixin.qq.com/sns/oauth2/access_token?appid=#{Setting.key[:wechat][:appid]}&secret=#{Setting.key[:wechat][:secret]}&code=#{code}&grant_type=authorization_code")
       request = Net::HTTP::Get.new(uri)
       JSON.parse(response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
         http.ssl_version = :SSLv3
         http.request(request)
-      end.body)['openid']
+      end.body)
     end
   end
 end
