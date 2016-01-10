@@ -119,6 +119,7 @@ GEM
     mini_magick (4.2.10)
     mini_portile2 (2.0.0)
     minitest (5.8.3)
+    multi_xml (0.5.5)
     mysql2 (0.3.20)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -266,6 +267,7 @@ DEPENDENCIES
   kaminari (~> 0.16.2)
   kaminari-bootstrap (~> 3.0.1)
   mini_magick (~> 4.2.1)
+  multi_xml
   mysql2 (~> 0.3.8)
   quiet_assets (~> 1.1.0)
   rails (= 4.2.0)
