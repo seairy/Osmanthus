@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  include UUID, AASM
+  include Identifierable, AASM
   aasm column: 'state' do
     state :unactivated
     state :activated, initial: true

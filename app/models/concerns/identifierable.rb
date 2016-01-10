@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-module UUID extend ActiveSupport::Concern
+module Identifierable extend ActiveSupport::Concern
   included do
     before_create :set_uuid
   end
