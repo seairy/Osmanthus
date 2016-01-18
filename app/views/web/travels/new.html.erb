@@ -1,0 +1,42 @@
+<div class="w-nav navbar" data-collapse="all" data-animation="over-left" data-duration="400" data-contain="1" data-easing="ease-out-quint" data-no-scroll="1">
+  <div class="w-container">
+    <div class="wrapper-mask" data-ix="menu-mask"></div>
+    <div class="navbar-title">创建新行程 - 第2/2步</div>
+    <a class="w-inline-block navbar-button" href="<%= url_for(set_destinations_new_web_travel_path(country_ids: @country_ids.join(','))) %>" data-load="1">
+      <div class="navbar-button-icon icon ion-ios-arrow-left"></div>
+    </a>
+  </div>
+</div>
+<div class="body padding">
+  <div class="w-form">
+    <%= render "web/commons/error_messages", target: @travel %>
+    <%= form_for [:web, @travel] do |f| %>
+      <%= hidden_field_tag :country_ids, @country_ids.join(',') %>
+      <div class="separator-fields"></div>
+      <div class="separator-fields"></div>
+      <div class="row-input-list">
+        <div class="w-clearfix input-form one-line">
+          <label class="label-form" for="birthday-field"><%= web_ar_t('travel.destinations') %></label>
+          <div class="pt10"><%= @countries.map(&:zh_name).join('、') %></div>
+        </div>
+        <div class="separator-fields"></div>
+      </div>
+      <div class="row-input-list">
+        <label class="label-form" for="travel_departure_at"><%= web_ar_t('travel.departure_at') %></label>
+        <input type="date" id="travel_departure_at" name="travel[departure_at]" data-name="travel_departure_at" class="w-input input-form">
+        <div class="separator-fields"></div>
+      </div>
+      <div class="row-input-list">
+        <label class="label-form" for="travel_return_at"><%= web_ar_t('travel.return_at') %></label>
+        <input type="date" id="travel_return_at" name="travel[return_at]" data-name="travel_return_at" class="w-input input-form">
+        <div class="separator-fields"></div>
+      </div>
+      <div>
+        <label class="label-form" for="message"><%= web_ar_t('travel.description') %></label>
+        <textarea id="travel_description" name="travel[description]" data-name="travel_description" placeholder="#可以写一些行程方面具体的安排哦" class="w-input input-form textarea"></textarea>
+      </div>
+      <div class="separator-button-input"></div>
+      <input type="submit" value="填写完成，提交" data-wait="Please wait..." class="w-button action-button"> 
+    <% end %>
+  </div>
+</div>

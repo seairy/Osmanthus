@@ -1,0 +1,10 @@
+<% if target.errors.any? %>
+<div class="w-form-fail">
+  <h3><span class="icon ion-close-circled"></span> 咦...出现了<%= target.errors.count %>个错误哦~</h3>
+  <ul>
+    <% target.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>
+<% end if target %>

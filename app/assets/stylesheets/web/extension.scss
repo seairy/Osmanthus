@@ -1,0 +1,65 @@
+/* Framework */
+
+.pt10 {
+  padding-top: 10px;
+}
+
+.w-form-fail {
+  padding: 6px 8px;
+  h3 {
+    margin: 0 0 0 10px;
+    color: #f00;
+    font-size: 14px;
+  }
+  ul {
+    padding-left: 30px;
+    li {
+      color: #666;
+      font-size: 12px;
+    }
+  }
+}
+
+/* Styles */
+
+.country-item {
+  clear: both;
+  padding-top: 15px;
+  border-bottom: 1px #eee dotted;
+  width: 100%;
+  height: 50px;
+  .flag-image {
+    float: left;
+    img {
+      width: 30px;
+      height: 20px;
+    }
+  }
+  .name {
+    float: left;
+    h3 {
+      margin: 0 0 0 14px;
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+  .checkmark {
+    float: right;
+    width: 18px;
+    span {
+      color: #39b54a;
+      font-size: 20px;
+    }
+  }
+  &.last {
+    border: none;
+  }
+}
+
+.empty-deal {
+  padding-top: 160px;
+  p {
+    text-align: center;
+    line-height: 18px;
+  }
+}

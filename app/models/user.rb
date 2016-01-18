@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   include Identifierable, AASM
   mount_uploader :portrait, UserPortraitUploader
+  has_many :travels
   aasm column: 'state' do
     state :unactivated
     state :activated, initial: true
@@ -24,7 +25,7 @@ class User < ActiveRecord::Base
       end
     end
 
-    def faker
+    def create_faker
       create!(open_id: "faker_#{SecureRandom.urlsafe_base64}").tap do |user|
         # user.behaviors.touch!
       end

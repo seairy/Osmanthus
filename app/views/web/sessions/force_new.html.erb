@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= @current_title || '小信鸽' %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <%= stylesheet_link_tag 'web', media: 'all', 'data-turbolinks-track' => true %>
+  </head>
+  <body>
+    <section class="w-section mobile-wrapper">
+      <div class="page-content bg-gradient" id="main-stack" data-scroll="0">
+        <div class="body padding">
+          <div class="logo-login"></div>
+          <div class="bottom-section padding">
+            <div class="w-form">
+              <%= form_tag web_force_sign_in_path do %>
+              <form id="submit-form" name="email-form" action="#" data-redirect="home.html">
+                <div>
+                  <label class="label-form light" for="email-field">OPEN ID</label> <input class="w-input input-form light" id="email-field" type="input" name="open_id" required="required"> 
+                  <div class="separator-fields"></div>
+                </div>
+                <input class="w-button action-button" type="submit" value="登录" data-wait="Please wait..."> 
+                <div class="separator-button"></div>
+                <%= link_to raw('没有Open ID? <strong class="b-link">立即生成</strong>'), web_force_sign_up_path, method: :post, data: { load: 1 }, class: 'link-upper' %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-content loading-mask" id="new-stack">
+        <div class="loading-icon">
+          <div class="navbar-button-icon icon ion-load-d"></div>
+        </div>
+      </div>
+    </section>
+    <%= javascript_include_tag 'web', 'data-turbolinks-track' => true %>
+    <%= content_for :javascript %>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<div class="w-nav navbar" data-collapse="all" data-animation="over-left" data-duration="400" data-contain="1" data-easing="ease-out-quint" data-no-scroll="1">
+  <div class="w-container">
+    <div class="wrapper-mask" data-ix="menu-mask"></div>
+    <div class="navbar-title">创建新行程 - 第1/2步</div>
+    <a class="w-inline-block navbar-button" href="<%= url_for(web_home_path) %>" data-load="1">
+      <div class="navbar-button-icon icon ion-ios-arrow-left"></div>
+    </a>
+  </div>
+</div>
+<div class="body">
+  <div class="w-clearfix grey-header">
+    <h2 class="grey-heading-title">请选择目的地</h2>
+  </div>
+  <div class="padding">
+    <%= render "web/commons/error_messages", target: @travel %>
+    <% Country.alphabetic.each_with_index do |country, i| %>
+    <div class="country-item<%= ' last' if Country.alphabetic.count == i + 1 %>">
+      <a class="w-clearfix w-inline-block" href="javascript:;">
+        <div class="flag-image"><%= image_tag country.flag.w60_h40_fl_q100.url %></div>
+        <div class="name"><h3><%= "#{PinYin.abbr(country.zh_name)[0].upcase} - #{country.zh_name} / #{country.en_name.truncate(18)}" %></h3></div>
+        <div class="checkmark<%= ' w-hidden' if !@country_ids.include?(country.id.to_s) %>" data-id="<%= country.id %>"><span class="icon ion-checkmark-circled"></span></div>
+      </a>
+    </div>
+    <% end %>
+    <div class="separator-fields"></div>
+    <div class="separator-fields"></div>
+    <div class="w-form">
+      <%= link_to '选择完成，下一步', new_web_travel_path, class: 'w-button action-button submit-button' %>
+      <div class="separator-fields"></div>
+      <div class="separator-fields"></div>
+    </div>
+  </div>
+  </div>
+</div>
+<% content_for :javascript do %>
+  <script>
+    $(document).ready(function() {
+      $('.country-item > a').click(function(e) {
+        e.preventDefault();
+        $(this).children('.checkmark').toggle();
+      });
+
+      $('.submit-button').click(function(e) {
+        e.preventDefault();
+        window.location = $(this).attr('href') + '?country_ids=' + $('.country-item > a > .checkmark:visible').map(function() {return $(this).data('id')}).get();
+      });
+    });
+  </script>
+<% end %>
