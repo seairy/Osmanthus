@@ -4,15 +4,19 @@ class User < ActiveRecord::Base
   has_many :travels
   has_many :deals
   aasm column: 'state' do
-    state :unactivated
-    state :activated, initial: true
+    state :unactivated, initial: true
+    state :activated
     state :prohibited
+    event :active do
+      transitions from: :unactivated, to: :activated
+    end
   end
 
-  def update_basic_attributes_from_wechat options = {}
-    Wechat::Base.find_basic_attributes(options).tap do |base_attributes|
+  def update_attributes_from_wechat options = {}
+    Wechat::Base.find_user_basic_attributes(options).tap do |base_attributes|
       self.nickname = base_attributes['nickname'] if self.nickname.blank?
       self.remote_portrait_url = base_attributes['headimgurl'] if self.portrait.blank?
+      self.active if Wechat::Base.find_user_attributes(options)['subscribe'] == 1
       self.save!
     end
   end
