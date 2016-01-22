@@ -10,6 +10,10 @@ class User < ActiveRecord::Base
     event :active do
       transitions from: :unactivated, to: :activated
     end
+
+    event :deactive do
+      transitions from: :activated, to: :unactivated
+    end
   end
 
   def update_attributes_from_wechat options = {}
