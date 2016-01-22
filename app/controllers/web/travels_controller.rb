@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class Web::TravelsController < Web::BaseController
-  before_action :find_travel, only: %w(show edit update publish_form publish)
+  before_action :find_travel, only: %w(show edit update)
   
   def index
     @travels = @current_user.travels.page(params[:page])
@@ -8,6 +8,9 @@ class Web::TravelsController < Web::BaseController
   
   def show
     if @travel.user.id == @current_user.id
+      @deals = @travel.deals.order("FIELD(state, 'in_process', 'success', 'failure')").order(created_at: :desc)
+      @handled_deals_count, @total_deals_count = @deals.select{|deal| !deal.in_process?}.count, @deals.count
+      @completion = ((@handled_deals_count.to_f / @total_deals_count.to_f) * 100).round(2)
       render 'owner_show'
     else
       render 'others_show'
@@ -60,12 +63,16 @@ class Web::TravelsController < Web::BaseController
     end
   end
 
+  def owned
+    @travels = @current_user.travels.order(created_at: :desc).page(params[:page])
+  end
+
   protected
     def travel_params
       params.require(:travel).permit!
     end
 
     def find_travel
-      @travel = @current_user.travels.find(params[:id])
+      @travel = Travel.find(params[:id])
     end
 end

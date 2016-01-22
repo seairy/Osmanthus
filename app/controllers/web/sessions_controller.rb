@@ -8,7 +8,9 @@ class Web::SessionsController < Web::BaseController
   end
 
   def force_create
-    
+    user = User.find_or_create_by_open_id(params[:open_id])
+    session[:user] = { id: user.id }
+    redirect_to web_home_path
   end
 
   def create

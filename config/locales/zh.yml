@@ -221,3 +221,11 @@ zh:
         return_at: 回程日期
         description: 行程描述
         destinations: 目的地
+        state: 状态
+        state/preparing: 准备中
+        state/departured: 已出发
+        state/returned: 已回国
+      deal:
+        content: 商品详情
+        quantity: 数量
+        acceptable_price_value: 可接受价格

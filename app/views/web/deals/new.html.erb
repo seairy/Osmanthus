@@ -1,0 +1,51 @@
+<div class="w-nav navbar" data-collapse="all" data-animation="over-left" data-duration="400" data-contain="1" data-easing="ease-out-quint" data-no-scroll="1">
+  <div class="w-container">
+    <div class="wrapper-mask" data-ix="menu-mask"></div>
+    <div class="navbar-title">发布新需求</div>
+    <a class="w-inline-block navbar-button" href="<%= url_for([:web, @travel]) %>" data-load="1">
+      <div class="navbar-button-icon icon ion-ios-arrow-left"></div>
+    </a>
+  </div>
+</div>
+<div class="body padding">
+  <div class="w-form">
+    <%= render "web/commons/error_messages", target: @deal %>
+    <%= form_for [:web, @travel, @deal] do |f| %>
+      <div class="separator-fields"></div>
+      <div class="separator-fields"></div>
+      <div class="row-input-list">
+        <label class="label-form" for="deal_content"><%= web_ar_t('deal.content') %></label>
+        <textarea id="deal_content" name="deal[content]" placeholder="#请尽量详细描述需要代购的商品，包括型号、货号、颜色、款式等" class="w-input input-form textarea"></textarea>
+        <div class="separator-fields"></div>
+      </div>
+      <div class="row-input-list">
+        <label class="label-form" for="deal_quantity"><%= web_ar_t('deal.quantity') %></label>
+        <select id="deal_quantity" name="deal[quantity]" class="w-select input-form select">
+          <% 1.upto(99).each do |quantity| %>
+          <option value="<%= quantity %>"><%= quantity %>件</option>
+          <% end %>
+        </select>
+        <div class="separator-fields"></div>
+      </div>
+      <div class="row-input-list">
+        <label class="label-form" for="deal_acceptable_price_value"><%= web_ar_t('deal.acceptable_price_value') %></label>
+        <div class="w-row">
+          <div class="w-col w-col-6 w-col-small-6 w-col-tiny-6 n-p-l">
+            <input type="text" id="deal_acceptable_price_value" name="deal[acceptable_price_value]" data-name="deal_acceptable_price_value" class="w-input input-form">
+          </div>
+          <div class="w-col w-col-6 w-col-small-6 w-col-tiny-6 n-p-r">
+            <select id="deal_acceptable_price_currency_id" name="deal[acceptable_price_currency_id]" class="w-select input-form select">
+              <option value="">元(CNY)</option>
+              <% Currency.circulation_in(@travel.destinations).each do |currency| %>
+              <option value="<%= currency.id %>"><%= currency.name_with_code %></option>
+              <% end %>
+            </select>
+          </div>
+          <p class="n-p-l"><span class="icon ion-information-circled"> 您能接受的最高价格，留空则表示对价格无要求</span></p>
+        </div>
+      </div>
+      <div class="separator-button-input"></div>
+      <input type="submit" value="填写完成，提交" data-wait="请稍候..." class="w-button action-button"> 
+    <% end %>
+  </div>
+</div>

@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   include Identifierable, AASM
   mount_uploader :portrait, UserPortraitUploader
   has_many :travels
+  has_many :deals
   aasm column: 'state' do
     state :unactivated
     state :activated, initial: true
@@ -25,8 +26,10 @@ class User < ActiveRecord::Base
       end
     end
 
-    def create_faker
+    def create_faker options = {}
       create!(open_id: "faker_#{SecureRandom.urlsafe_base64}").tap do |user|
+        user.update!(nickname: Faker::Name.name)
+        user.update!(portrait: File.open(File.join(Rails.root, 'public', 'abstract_images', "#{rand(1..200).to_s.rjust(3, '0')}.jpg"))) if options[:with_portrait]
         # user.behaviors.touch!
       end
     end

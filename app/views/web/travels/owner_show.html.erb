@@ -2,11 +2,8 @@
   <div class="w-container">
     <div class="wrapper-mask" data-ix="menu-mask"></div>
     <div class="navbar-title">查看行程</div>
-    <a class="w-inline-block navbar-button" href="" data-load="1">
+    <a class="w-inline-block navbar-button" href="<%= url_for(owned_web_travels_path) %>" data-load="1">
       <div class="navbar-button-icon icon ion-ios-arrow-left"></div>
-    </a>
-    <a class="w-inline-block navbar-button right" href="addnew.html" data-loader="1">
-      <div class="navbar-button-icon icon ion-ios-redo-outline"></div>
     </a>
   </div>
 </div>
@@ -14,34 +11,28 @@
   <div class="hero-image">
     <div class="hero-image-title">
       <h2>代购清单</h2>
-      <div class="sub-title-small"><%= @travel.deals.unfinished.count %> / <%= @travel.deals.unfinished.count + @travel.deals.finished.count %> 个任务 &nbsp;|&nbsp;&nbsp;已完成 0%</div>
+      <div class="sub-title-small"><%= @handled_deals_count %> / <%= @total_deals_count %> 个任务 &nbsp;|&nbsp;&nbsp;已完成 <%= @completion %>%</div>
     </div>
     <div class="hero-image-img"><%= image_tag('web/travel_bg.jpg') %></div>
   </div>
   <% if @travel.deals.count.zero? %>
   <div class="empty-deal">
-    <p><span class="icon ion-information-circled"></span> 清单是空的哦！</p>
-    <p>请点击右上角分享按钮</p>
-    <p>将此行程分享到朋友圈或微信群</p>
+    <p>请点击右上角 <span class="icon ion-ios-more"></span> 按钮</p>
+    <p>将此行程分享到朋友圈或微信好友</p>
   </div>
   <% else %>
   <ul class="list">
-    <li class="list-item grey highlighted" data-ix="list-item">
-      <a class="w-clearfix w-inline-block highlighted" href="#">
-        <div class="icon-list highlighted">
-          <div class="icon ion-ios-checkmark-empty"></div>
+    <% @deals.each do |deal| %>
+    <li class="list-item<%= " grey #{deal.state}" if !deal.in_process? %>">
+      <a class="w-clearfix w-inline-block<%= " #{deal.state}" if !deal.in_process? %>" href="<%= url_for([:web, deal]) %>">
+        <div class="icon-list<%= " #{deal.state}" if !deal.in_process? %>">
+          <div class="icon <%= deal.failure? ? 'ion-ios-close-empty' : 'ion-ios-checkmark-empty' %>"></div>
         </div>
-        <div class="title-list">Create a pixel-perfect design</div>
+        <div class="title-list"><%= deal.content %></div>
+        <%= image_tag(deal.user.portrait.w100_h100_fl_q60.url, class: 'portrait') %>
       </a>
     </li>
-    <li class="list-item" data-ix="list-item">
-      <a class="w-clearfix w-inline-block" href="#">
-        <div class="icon-list">
-          <div class="icon ion-ios-checkmark-empty"></div>
-        </div>
-        <div class="title-list">Simple to use</div>
-      </a>
-    </li>
+    <% end %>
   </ul>
   <% end %>
 </div>

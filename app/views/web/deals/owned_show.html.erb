@@ -1,0 +1,41 @@
+<div class="w-nav navbar" data-collapse="all" data-animation="over-left" data-duration="400" data-contain="1" data-easing="ease-out-quint" data-no-scroll="1">
+  <div class="w-container">
+    <div class="wrapper-mask" data-ix="menu-mask"></div>
+    <div class="navbar-title">需求详情</div>
+    <a class="w-inline-block navbar-button" href="<%= url_for([:web, @deal.travel]) %>" data-load="1">
+      <div class="navbar-button-icon icon ion-ios-arrow-left"></div>
+    </a>
+  </div>
+</div>
+<div class="body padding">
+  <div class="w-form">
+    <%= render "web/commons/error_messages", target: @deal %>
+    <%= form_tag nil do %>
+      <div class="separator-fields"></div>
+      <div class="separator-fields"></div>
+      <div class="row-input-list">
+        <label class="label-form" for="deal_content"><%= web_ar_t('deal.content') %></label>
+        <div class="value-form"><%= @deal.content %></div>
+        <div class="separator-fields"></div>
+      </div>
+      <div class="row-input-list">
+        <label class="label-form" for="deal_quantity"><%= web_ar_t('deal.quantity') %></label>
+        <div class="value-form"><%= @deal.quantity %>件</div>
+        <div class="separator-fields"></div>
+      </div>
+      <div class="row-input-list">
+        <label class="label-form" for="deal_acceptable_price_value"><%= web_ar_t('deal.acceptable_price_value') %></label>
+        <div class="value-form"><%= hr_deal_acceptable_price(@deal.acceptable_price) %></div>
+      </div>
+      <div class="separator-button-input"></div>
+      <div class="w-row">
+        <div class="w-col w-col-6 w-col-small-6 w-col-tiny-6 n-p-l">
+          <%= link_to '修改需求', edit_web_deal_path(@deal), class: 'w-button edit-button' %>
+        </div>
+        <div class="w-col w-col-6 w-col-small-6 w-col-tiny-6 n-p-r">
+          <%= link_to '删除', [:web, @deal], method: :delete, data: { confirm: '确定要删除吗？' }, class: 'w-button action-button' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

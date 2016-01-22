@@ -4,8 +4,21 @@ Rails.application.routes.draw do
     root 'base#verify', via: [:get, :post]
     get 'home', to: 'home#index', as: :home
     resources :travels do
+      resources :deals
       new do
         get :set_destinations
+      end
+      collection do
+        get :owned
+      end
+    end
+    resources :deals do
+      collection do
+        get :owned
+      end
+      member do
+        put :finish
+        put :abort
       end
     end
     get 'force_sign_in', to: 'sessions#force_new', as: :force_sign_in
