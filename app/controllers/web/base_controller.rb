@@ -24,7 +24,7 @@ class Web::BaseController < ApplicationController
           when 'SCAN'
           when 'subscribe'
             User.find_open_id(notification['FromUserName']).active!
-            result = reply_text_message(open_id: notification['FromUserName'], content: '欢迎使用小信鸽！分享您的旅行箱，结交更多好朋友~&#x1f46c&#x1f46b&#x1f46d<br /><a href="http://luggagep.com/web/restore">点击此处</a>可以返回到之前的页面哦~')
+            result = reply_text_message(open_id: notification['FromUserName'], content: '欢迎使用小信鸽！分享您的旅行箱，结交更多好朋友~&#x1f46c;&#x1f46b;&#x1f46d;<br><a href="http://luggagep.com/web/restore">点击此处</a>可以返回到之前的页面哦~')
           when 'unsubscribe'
             User.find_open_id(notification['FromUserName']).deactive!
           end
