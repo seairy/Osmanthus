@@ -38,7 +38,7 @@ class Wechat::Base < ActiveRecord::Base
     end
 
     def find_basic_attributes options = {}
-      uri = URI("https://api.weixin.qq.com/user/info?access_token=#{options[:access_token]}&openid=#{options[:open_id]}&lang=zh_CN")
+      uri = URI("https://api.weixin.qq.com/cgi-bin/user/info??access_token=#{options[:access_token]}&openid=#{options[:open_id]}&lang=zh_CN")
       Rails.logger.info "**************** uri: #{uri}"
       request = Net::HTTP::Get.new(uri)
       response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
