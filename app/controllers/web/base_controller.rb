@@ -24,7 +24,7 @@ class Web::BaseController < ApplicationController
           when 'SCAN'
           when 'subscribe'
             User.find_open_id(notification['FromUserName']).active!
-            result = reply_text_message(open_id: notification['FromUserName'], content: '感谢关注!')
+            result = reply_text_message(open_id: notification['FromUserName'], content: '欢迎使用小信鸽！<a href="http://luggagep.com/web/restore">点击此处</a>返回到之前的页面')
           when 'unsubscribe'
             User.find_open_id(notification['FromUserName']).deactive!
           end
@@ -38,13 +38,7 @@ class Web::BaseController < ApplicationController
           raise ArgumentError, 'Unknown Weixin Message'
         end
       end
-      if params[:echostr]
-        render plain: params[:echostr]
-      elsif result
-        render plain: result
-      else
-        render plain: 'success'
-      end
+      render plain: (params[:echostr] || result || 'success')
     else
       render plain: 'failure'
     end
