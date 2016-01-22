@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 class Web::TravelsController < Web::BaseController
   before_action :find_travel, only: %w(show edit update)
+  skip_before_action :check_follower, only: %w(show)
   
   def index
     @travels = @current_user.travels.page(params[:page])
@@ -10,7 +11,7 @@ class Web::TravelsController < Web::BaseController
     if @travel.user.id == @current_user.id
       @deals = @travel.deals.order("FIELD(state, 'in_process', 'success', 'failure')").order(created_at: :desc)
       @handled_deals_count, @total_deals_count = @deals.select{|deal| !deal.in_process?}.count, @deals.count
-      @completion = ((@handled_deals_count.to_f / @total_deals_count.to_f) * 100).round(2) || 0
+      @completion = ((@handled_deals_count.to_f / @total_deals_count.to_f) * 100).round(2)
       render 'owner_show'
     else
       render 'others_show'

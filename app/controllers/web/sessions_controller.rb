@@ -2,6 +2,7 @@
 class Web::SessionsController < Web::BaseController
   skip_before_action :authenticate
   skip_before_action :set_current_user
+  skip_before_action :check_follower
 
   def force_new
     render layout: false

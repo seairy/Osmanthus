@@ -5,6 +5,7 @@ class Web::BaseController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :authenticate, except: %w{verify}
   before_action :set_current_user, except: %w{verify}
+  before_action :check_follower, except: %w{verify}
 
   def verify
     if params[:signature] and params[:timestamp] and params[:nonce] and Digest::SHA1.hexdigest([params[:timestamp], params[:nonce], Setting.key[:wechat][:token]].sort.join) == params[:signature]
@@ -24,7 +25,7 @@ class Web::BaseController < ApplicationController
           when 'SCAN'
           when 'subscribe'
             User.find_open_id(notification['FromUserName']).active!
-            result = reply_text_message(open_id: notification['FromUserName'], content: "欢迎使用小信鸽！分享您的旅行箱，结交更多好朋友~👫\r\n<a href=\"http://luggagep.com/web/restore\">点击此处</a>可以返回到之前的页面哦~")
+            result = reply_text_message(open_id: notification['FromUserName'], content: "欢迎使用小信鸽！分享您的旅行箱，结交更多好朋友~👫\r\n<a href=\"http://luggagep.com/web/restore\">点击此处</a>返回到之前的页面")
           when 'unsubscribe'
             User.find_open_id(notification['FromUserName']).deactive!
           end
@@ -57,6 +58,11 @@ class Web::BaseController < ApplicationController
     end
 
     def set_previous_path
+      session['previous_path'] = request.path
+    end
+
+    def check_follower
+      redirect_to web_follow_path if @current_user.unactivated?
       session['previous_path'] = request.path
     end
 

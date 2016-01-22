@@ -1,0 +1,23 @@
+<div class="w-nav navbar" data-collapse="all" data-animation="over-left" data-duration="400" data-contain="1" data-easing="ease-out-quint" data-no-scroll="1">
+  <div class="w-container">
+    <div class="wrapper-mask" data-ix="menu-mask"></div>
+    <div class="navbar-title">小信鸽</div>
+    <a class="w-inline-block navbar-button" href="<%= session['previous_path'] %>" data-load="1">
+      <div class="navbar-button-icon icon ion-ios-arrow-left"></div>
+    </a>
+  </div>
+</div>
+<div class="body">
+  <div class="w-clearfix grey-header">
+    <h2 class="grey-heading-title">请关注微信公众号</h2>
+  </div>
+  <div class="padding">
+    <div class="follow">
+      <%= image_tag 'web/qrcode.jpg' %>
+      <div class="description">
+        <p>长按二维码即可关注公众号</p>
+        <p>或在微信中搜索“小信鸽”</p>
+      </div>
+    </div>
+  </div>
+</div>

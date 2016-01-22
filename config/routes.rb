@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   namespace :web do
     root 'base#verify', via: [:get, :post]
     get 'home', to: 'home#index', as: :home
+    get 'follow', to: 'home#follow', as: :follow
+    get 'restore', to: 'home#restore', as: :restore
     resources :travels do
       resources :deals
       new do
