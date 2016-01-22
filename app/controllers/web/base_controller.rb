@@ -9,8 +9,7 @@ class Web::BaseController < ApplicationController
   def verify
     if params[:signature] and params[:timestamp] and params[:nonce] and Digest::SHA1.hexdigest([params[:timestamp], params[:nonce], Setting.key[:wechat][:token]].sort.join) == params[:signature]
       if request.post?
-        notification = MultiXml.parse(request.raw_post)['xml']
-        Rails.logger.info "********** #{notification}"
+        notification, result = MultiXml.parse(request.raw_post)['xml'], nil
         case notification['MsgType']
         when 'text'
           
@@ -25,6 +24,9 @@ class Web::BaseController < ApplicationController
           when 'SCAN'
           when 'subscribe'
             User.find_open_id(notification['FromUserName']).active!
+            result = reply_text_message(open_id: notification['FromUserName'], content: '感谢关注!')
+          when 'unsubscribe'
+            User.find_open_id(notification['FromUserName']).deactive!
           end
         when 'voice'
           
@@ -36,9 +38,15 @@ class Web::BaseController < ApplicationController
           raise ArgumentError, 'Unknown Weixin Message'
         end
       end
-      render text: params[:echostr]
+      if params[:echostr]
+        render plain: params[:echostr]
+      elsif result
+        render plain: result
+      else
+        render plain: 'success'
+      end
     else
-      render text: 'failure'
+      render plain: 'failure'
     end
   end
 
@@ -56,5 +64,15 @@ class Web::BaseController < ApplicationController
 
     def set_previous_path
       session['previous_path'] = request.path
+    end
+
+    def reply_text_message options = {}
+      "<xml>
+<ToUserName><![CDATA[#{options[:open_id]}]]></ToUserName>
+<FromUserName><![CDATA[gh_0b644b570d06]]></FromUserName>
+<CreateTime>#{Time.now.to_i}</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[#{options[:content]}]]></Content>
+</xml>"
     end
 end
