@@ -11,7 +11,6 @@ class User < ActiveRecord::Base
 
   def update_basic_attributes_from_wechat options = {}
     Wechat::Base.find_basic_attributes(options).tap do |base_attributes|
-      Rails.logger.info "******************** #{base_attributes}"
       self.nickname = base_attributes['nickname'] if self.nickname.blank?
       self.remote_portrait_url = base_attributes['headimgurl'] if self.portrait.blank?
       self.save!
