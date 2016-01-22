@@ -13,11 +13,13 @@ class User < ActiveRecord::Base
   end
 
   def update_attributes_from_wechat options = {}
-    Wechat::Base.find_user_basic_attributes(options).tap do |base_attributes|
-      self.nickname = base_attributes['nickname'] if self.nickname.blank?
-      self.remote_portrait_url = base_attributes['headimgurl'] if self.portrait.blank?
-      self.active if Wechat::Base.find_user_attributes(options)['subscribe'] == 1
-      self.save!
+    if self.nickname.blank?
+      Wechat::Base.find_user_basic_attributes(options).tap do |base_attributes|
+        self.nickname = base_attributes['nickname'] 
+        self.remote_portrait_url = base_attributes['headimgurl']
+        self.active if Wechat::Base.find_user_attributes(options)['subscribe'] == 1
+        self.save!
+      end
     end
   end
 
