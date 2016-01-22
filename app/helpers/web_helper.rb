@@ -59,7 +59,6 @@ module WebHelper
               <div class=\"icon ion-ios-paper-outline\"></div>
             </div>
             <div class=\"nav-menu-titles\">创建新行程</div>
-            <div class=\"nav-menu-text-right\">0</div>
           </a>
           <a class=\"w-clearfix w-inline-block nav-menu-link\" href=\"#{url_for(owned_web_travels_path)}\" data-load=\"1\">
             <div class=\"icon-list-menu\">
