@@ -8,10 +8,10 @@ class User < ActiveRecord::Base
     state :activated
     state :prohibited
     event :active do
-      transitions from: :unactivated, to: :activated
+      transitions from: [:unactivated, :activated], to: :activated
     end
     event :deactive do
-      transitions from: :activated, to: :unactivated
+      transitions from: [:unactivated, :activated], to: :unactivated
     end
   end
 
