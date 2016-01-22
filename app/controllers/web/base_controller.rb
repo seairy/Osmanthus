@@ -69,7 +69,7 @@ class Web::BaseController < ApplicationController
     def reply_text_message options = {}
       "<xml>
 <ToUserName><![CDATA[#{options[:open_id]}]]></ToUserName>
-<FromUserName><![CDATA[gh_0b644b570d06]]></FromUserName>
+<FromUserName><![CDATA[gh_eab5fc41e1c3]]></FromUserName>
 <CreateTime>#{Time.now.to_i}</CreateTime>
 <MsgType><![CDATA[text]]></MsgType>
 <Content><![CDATA[#{options[:content]}]]></Content>
