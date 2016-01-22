@@ -36,6 +36,10 @@ class User < ActiveRecord::Base
       end
     end
 
+    def find_open_id open_id
+      where(open_id: open_id).first || raise(ActiveRecord::RecordNotFound)
+    end
+
     def create_faker options = {}
       create!(open_id: "faker_#{SecureRandom.urlsafe_base64}").tap do |user|
         user.update!(nickname: Faker::Name.name)
