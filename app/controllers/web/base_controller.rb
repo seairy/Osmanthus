@@ -60,6 +60,9 @@ class Web::BaseController < ApplicationController
     end
 
     def set_previous_path
+      Rails.logger.info "**** Controller: #{controller_name}"
+      Rails.logger.info "**** Action: #{action_name}"
+      Rails.logger.info "**** Path: #{request.path}"
       session['previous_path'] = request.path
     end
 
