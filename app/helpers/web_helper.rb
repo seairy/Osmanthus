@@ -49,7 +49,7 @@ module WebHelper
     options[:permissions] ||= [:onMenuShareAppMessage, :onMenuShareTimeline]
     signature = Digest::SHA1.hexdigest("jsapi_ticket=#{Wechat::Base.jsapi_ticket}&noncestr=#{nonce}&timestamp=#{timestamp}&url=#{request.original_url}")
     raw "wx.config({
-      debug: true,
+      debug: #{Rails.env.production? ? 'false' : 'true'},
       appId: '#{Setting.key[:wechat][:appid]}',
       timestamp: #{timestamp},
       nonceStr: '#{nonce}',

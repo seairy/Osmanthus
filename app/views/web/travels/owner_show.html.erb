@@ -42,10 +42,10 @@
     <%= wechat_config_tag %>
     wx.ready(function(){
       wx.onMenuShareAppMessage({
-        title: 'HH', // 分享标题
-        desc: 'DD', // 分享描述
-        link: 'http://baidu.com', // 分享链接
-        imgUrl: '', // 分享图标
+        title: '我要粗去玩啦~有什么要带的吗',
+        desc: '我在用#小信鸽#统计购物清单，快快点我来发布你的清单吧！',
+        link: '<%= request.original_url %>',
+        imgUrl: '<%= image_url(@travel.user.portrait.w180_h180_fl_q60.url) %>',
         type: 'link',
         dataUrl: '',
         success: function () { 
