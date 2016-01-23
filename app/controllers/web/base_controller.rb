@@ -50,6 +50,7 @@ class Web::BaseController < ApplicationController
 
   protected
     def authenticate
+      set_previous_path
       redirect_to "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{Setting.key[:wechat][:appid]}&redirect_uri=#{URI.encode("http://#{Setting.key[:application][:host_name]}/web/sign_in", ':/')}&response_type=code&scope=snsapi_userinfo&state=authenticate#wechat_redirect" unless session['user']
     end
 
