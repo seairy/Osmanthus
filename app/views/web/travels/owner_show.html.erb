@@ -53,6 +53,16 @@
         cancel: function () { 
         }
       });
+
+      wx.onMenuShareTimeline({
+        title: '我要粗去玩啦~有什么要带的吗',
+        link: '<%= request.original_url %>',
+        imgUrl: '<%= image_url(@travel.user.portrait.w180_h180_fl_q60.url) %>',
+        success: function () { 
+        },
+        cancel: function () { 
+        }
+      });
     });
   </script>
 <% end %>
