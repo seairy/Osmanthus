@@ -20,7 +20,7 @@ class Web::SessionsController < Web::BaseController
       user.update_attributes_from_wechat(access_token: authorization_data['access_token'], open_id: authorization_data['openid'])
       session[:user] = { id: user.id }
     end
-    redirect_to web_home_path
+    redirect_to(session['previous_path'] || web_home_path)
   end
 
   def destroy
