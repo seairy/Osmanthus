@@ -5,6 +5,7 @@ class Web::BaseController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :authenticate, except: %w{verify}
   before_action :set_current_user, except: %w{verify}
+  before_action :set_previous_path, except: %w{verify}
   before_action :check_follower, except: %w{verify}
 
   def verify
@@ -64,7 +65,6 @@ class Web::BaseController < ApplicationController
 
     def check_follower
       redirect_to web_follow_path if @current_user.unactivated?
-      session['previous_path'] = request.path
     end
 
     def reply_text_message options = {}

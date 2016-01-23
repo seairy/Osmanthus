@@ -15,6 +15,7 @@ class Web::TravelsController < Web::BaseController
       @completion = 0 if @completion.nan?
       render 'owner_show'
     else
+      set_previous_path
       render 'others_show'
     end
   end

@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 class Web::HomeController < Web::BaseController
+  skip_before_action :set_previous_path
   skip_before_action :check_follower
   
   def index
@@ -9,7 +10,7 @@ class Web::HomeController < Web::BaseController
   end
 
   def restore
-    if session['previous_path'].blank? or session['previous_path'] == request.path
+    if session['previous_path'].blank?
       redirect_to web_home_path
     else
       redirect_to session['previous_path']
