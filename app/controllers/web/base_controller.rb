@@ -24,10 +24,10 @@ class Web::BaseController < ApplicationController
           case notification['Event']
           when 'SCAN'
           when 'subscribe'
-            User.find_open_id(notification['FromUserName']).active!
+            User.find_or_create_by_open_id(notification['FromUserName']).active!
             result = reply_text_message(open_id: notification['FromUserName'], content: "欢迎使用小信鸽！分享您的旅行箱，结交更多好朋友~👫\r\n<a href=\"http://luggagep.com/web/restore\">点击此处</a>返回到之前的页面")
           when 'unsubscribe'
-            User.find_open_id(notification['FromUserName']).deactive!
+            User.where(open_id: notification['FromUserName']).first.try(:deactive!)
           end
         when 'voice'
           
