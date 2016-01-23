@@ -3,9 +3,9 @@ class Web::BaseController < ApplicationController
   layout 'web'
 
   skip_before_action :verify_authenticity_token
+  before_action :set_previous_path, except: %w{verify}
   before_action :authenticate, except: %w{verify}
   before_action :set_current_user, except: %w{verify}
-  before_action :set_previous_path, except: %w{verify}
   before_action :check_follower, except: %w{verify}
 
   def verify
@@ -51,7 +51,6 @@ class Web::BaseController < ApplicationController
 
   protected
     def authenticate
-      set_previous_path
       redirect_to "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{Setting.key[:wechat][:appid]}&redirect_uri=#{URI.encode("http://#{Setting.key[:application][:host_name]}/web/sign_in", ':/')}&response_type=code&scope=snsapi_userinfo&state=authenticate#wechat_redirect" unless session['user']
     end
 
