@@ -8,6 +8,11 @@ class Web::BaseController < ApplicationController
   before_action :set_current_user, except: %w{verify}
   before_action :check_follower, except: %w{verify}
 
+  unless Rails.application.config.consider_all_requests_local
+    rescue_from Exception, with: lambda { |exception| render_error 500, exception }
+    rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, ActiveRecord::RecordNotFound, with: lambda { |exception| render_error 404, exception }
+  end
+
   def verify
     if params[:signature] and params[:timestamp] and params[:nonce] and Digest::SHA1.hexdigest([params[:timestamp], params[:nonce], Setting.key[:wechat][:token]].sort.join) == params[:signature]
       if request.post?
@@ -50,6 +55,11 @@ class Web::BaseController < ApplicationController
   end
 
   protected
+    def render_error status, exception
+      ServiceException.create(module: :web, caller_id: (session['user'].try(:[], 'id') || 0), name: exception.class.to_s, message: exception.message, backtrace: "<p>#{exception.backtrace.try(:join, '</p><p>')}</p>")
+      render template: "web/errors/error_#{status}", status: status
+    end
+
     def authenticate
       redirect_to "https://open.weixin.qq.com/connect/oauth2/authorize?appid=#{Setting.key[:wechat][:appid]}&redirect_uri=#{URI.encode("http://#{Setting.key[:application][:host_name]}/web/sign_in", ':/')}&response_type=code&scope=snsapi_userinfo&state=authenticate#wechat_redirect" unless session['user']
     end
@@ -59,9 +69,6 @@ class Web::BaseController < ApplicationController
     end
 
     def set_previous_path
-      Rails.logger.info "**** Controller: #{controller_name}"
-      Rails.logger.info "**** Action: #{action_name}"
-      Rails.logger.info "**** Path: #{request.path}"
       session['previous_path'] = request.path
     end
 

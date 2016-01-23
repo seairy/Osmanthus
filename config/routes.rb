@@ -28,5 +28,14 @@ Rails.application.routes.draw do
     post 'force_sign_up', to: 'users#create_faker', as: :force_sign_up
     get 'sign_in', to: 'sessions#create', as: :sign_in
     get 'sign_out', to: 'sessions#destroy', as: :sign_out
+    resources :errors do
+      collection do
+        get :error_404
+        get :error_500
+      end
+    end
+    unless Rails.application.config.consider_all_requests_local
+      get '*not_found', to: 'errors#error_404'
+    end
   end
 end

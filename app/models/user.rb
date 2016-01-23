@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   include Identifierable, AASM
   mount_uploader :portrait, UserPortraitUploader
+  as_enum :gender, [:unknown, :male, :female], prefix: true, map: :string
   has_many :travels
   has_many :deals
   aasm column: 'state' do
@@ -20,6 +21,11 @@ class User < ActiveRecord::Base
       Wechat::Base.find_user_basic_attributes(options).tap do |base_attributes|
         self.nickname = base_attributes['nickname'] 
         self.remote_portrait_url = base_attributes['headimgurl']
+        self.gender = case base_attributes['sex']
+          when '0' then :unknown
+          when '1' then :male
+          when '2' then :female
+        end
         self.active if Wechat::Base.find_user_attributes(options)['subscribe'] == 1
         self.save!
       end

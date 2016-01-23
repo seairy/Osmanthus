@@ -10,7 +10,6 @@ class Web::HomeController < Web::BaseController
   end
 
   def restore
-    Rails.logger.info "************** session['previous_path']: [#{session['previous_path']}]"
     if session['previous_path'].blank?
       redirect_to web_home_path
     else

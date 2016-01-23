@@ -8,6 +8,7 @@ class Web::TravelsController < Web::BaseController
   end
   
   def show
+    ddd
     if @travel.user.id == @current_user.id
       @deals = @travel.deals.order("FIELD(state, 'in_process', 'success', 'failure')").order(created_at: :desc)
       @handled_deals_count, @total_deals_count = @deals.select{|deal| !deal.in_process?}.count, @deals.count
