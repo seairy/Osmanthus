@@ -14,7 +14,7 @@
   <div class="w-clearfix travel-description padding">
     <%= image_tag(@travel.user.portrait.w100_h100_fl_q60.url || 'web/user_portrait.jpg', class: 'portrait') %>
     <div class="description">
-      <p>您的微信好友<span class="strong"><%= @travel.user.nickname %></span>将于<span class="strong"><%= @travel.departure_at.strftime('%Y年%m月%d日') %></span>前往<span class="strong"><%= web_hr_travel_destinations(@travel.destinations)%></span>旅游，并于<span class="strong"><%= @travel.return_at.strftime('%Y年%m月%d日') %></span>回国，您现在可以在此发布代购需求。</p>
+      <p>您的微信好友<span class="strong"><%= @travel.user.nickname %></span>将于<span class="strong"><%= @travel.departure_at.strftime('%Y年%m月%d日') %></span>前往<span class="strong"><%= hr_travel_destinations(@travel.destinations)%></span>旅游，并于<span class="strong"><%= @travel.return_at.strftime('%Y年%m月%d日') %></span>回国，您现在可以在此发布代购需求。</p>
     </div>
   </div>
   <div class="w-clearfix grey-header">

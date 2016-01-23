@@ -36,3 +36,23 @@
   </ul>
   <% end %>
 </div>
+<% content_for :javascript do %>
+  <%= javascript_include_tag 'http://res.wx.qq.com/open/js/jweixin-1.0.0.js' %>
+  <script>
+    <%= wechat_config_tag %>
+    wx.ready(function(){
+      wx.onMenuShareAppMessage({
+        title: 'HH', // 分享标题
+        desc: 'DD', // 分享描述
+        link: 'http://baidu.com', // 分享链接
+        imgUrl: '', // 分享图标
+        type: 'link',
+        dataUrl: '',
+        success: function () { 
+        },
+        cancel: function () { 
+        }
+      });
+    });
+  </script>
+<% end %>

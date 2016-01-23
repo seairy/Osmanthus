@@ -22,7 +22,7 @@
           <% end %>
         </div>
         <div class="text-new">
-          <div><span class="category-link">目的地</span><span class="description-new"><%= web_hr_travel_destinations(travel.destinations)%></span></div>
+          <div><span class="category-link">目的地</span><span class="description-new"><%= hr_travel_destinations(travel.destinations)%></span></div>
           <div><span class="category-link">出行日期</span><span class="description-new"><%= travel.departure_at.strftime('%Y年%m月%d日') %> - <%= travel.return_at.strftime('%m月%d日') %></span></div>
           <div><span class="category-link">状态</span><span class="description-new"><%= travel.aasm.human_state %></span></div>
         </div>

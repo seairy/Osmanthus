@@ -27,7 +27,7 @@ module WebHelper
     price.round
   end
 
-  def web_hr_travel_destinations destionations
+  def hr_travel_destinations destionations
     destionations.map{|destionation| destionation.country.zh_name}.join('、')
   end
 
@@ -41,6 +41,21 @@ module WebHelper
       price += " / <span class=\"text-grey\">#{web_price(acceptable_price.in_local)}元(CNY)</span>" if options[:with_local]
       raw(price)
     end
+  end
+
+  def wechat_config_tag options = {}
+    timestamp = Time.now.to_i
+    nonce = SecureRandom.urlsafe_base64
+    options[:permissions] ||= [:onMenuShareAppMessage, :onMenuShareTimeline]
+    signature = Digest::SHA1.hexdigest("jsapi_ticket=#{Wechat::Base.jsapi_ticket}&noncestr=#{nonce}&timestamp=#{timestamp}&url=#{request.original_url}")
+    raw "wx.config({
+      debug: true,
+      appId: '#{Setting.key[:wechat][:appid]}',
+      timestamp: #{timestamp},
+      nonceStr: '#{nonce}',
+      signature: '#{signature}',
+      jsApiList: [#{options[:permissions].map{|i| "'#{i}'"}.join(', ')}]
+    });"
   end
 
   def navbar_default_tag
