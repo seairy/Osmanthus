@@ -9,7 +9,7 @@ class Web::HomeController < Web::BaseController
   end
 
   def restore
-    if session['previous_path'].blank?
+    if session['previous_path'].blank? or session['previous_path'] == request.path
       redirect_to web_home_path
     else
       redirect_to session['previous_path']
