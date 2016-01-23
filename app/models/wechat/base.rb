@@ -23,6 +23,7 @@ class Wechat::Base < ActiveRecord::Base
 
     def find_jsapi_ticket
       response = request_get_and_response_as_json("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=#{Wechat::Base.access_token}&type=jsapi")
+      puts "********** #{response}"
       where(name: :jsapi_ticket).first.tap do |jsapi_ticket|
         access_token.try(:update!, { value: response['ticket'], expired_at: Time.now + response['expires_in'].seconds })
       end || create!(name: 'jsapi_ticket', value: response['ticket'], expired_at: Time.now + response['expires_in'].seconds)
@@ -57,6 +58,10 @@ class Wechat::Base < ActiveRecord::Base
         http.ssl_version = :SSLv3
         http.request(request)
       end.body)
+    end
+
+    def cleanup
+      self.destroy_all
     end
   end
 end
