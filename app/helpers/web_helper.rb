@@ -48,7 +48,6 @@ module WebHelper
     nonce = SecureRandom.urlsafe_base64
     options[:permissions] ||= [:onMenuShareAppMessage, :onMenuShareTimeline]
     signature = Digest::SHA1.hexdigest("jsapi_ticket=#{Wechat::Base.jsapi_ticket}&noncestr=#{nonce}&timestamp=#{timestamp}&url=#{request.original_url}")
-    Rails.logger.info "************ signature original: #{"jsapi_ticket=#{Wechat::Base.jsapi_ticket}&noncestr=#{nonce}&timestamp=#{timestamp}&url=#{request.original_url}"}"
     raw "wx.config({
       debug: #{Rails.env.production? ? 'false' : 'true'},
       appId: '#{Setting.key[:wechat][:appid]}',
