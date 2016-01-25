@@ -5,9 +5,13 @@
     <a class="w-inline-block navbar-button" href="<%= url_for(owned_web_travels_path) %>" data-load="1">
       <div class="navbar-button-icon icon ion-ios-arrow-left"></div>
     </a>
+    <a class="w-inline-block navbar-button right share-button" href="javascript:;">
+      <div class="navbar-button-icon icon ion-ios-upload-outline"></div>
+    </a>
   </div>
 </div>
 <div class="body">
+  <div class="share-mask"><%= image_tag('web/share_mask.png') %></div>
   <div class="hero-image">
     <div class="hero-image-title">
       <h2>代购清单</h2>
@@ -17,6 +21,7 @@
   </div>
   <% if @travel.deals.count.zero? %>
   <div class="empty-deal">
+    <p>代购清单是空哒！快告诉朋友们吧~</p>
     <p>请点击右上角 <span class="icon ion-ios-more"></span> 按钮</p>
     <p>将此行程分享给微信好友或朋友圈</p>
   </div>
@@ -39,6 +44,15 @@
 <% content_for :javascript do %>
   <%= javascript_include_tag 'http://res.wx.qq.com/open/js/jweixin-1.0.0.js' %>
   <script>
+    jQuery(document).ready(function(){
+      $('.share-button').on('click', function() {
+        $('.share-mask').show();
+      });
+
+      $('.share-mask').on('click', function() {
+        $('.share-mask').hide();
+      });
+    });
     <%= wechat_config_tag %>
     wx.ready(function(){
       wx.onMenuShareAppMessage({
