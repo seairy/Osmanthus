@@ -20,7 +20,12 @@
       </div>
       <div class="row-input-list">
         <label class="label-form" for="deal_quantity"><%= web_ar_t('deal.photographs') %></label>
-        <a href="javascript:;" class="select-image">选择图片</a>
+        <div class="image-preview">
+          <% 1.upto(5).each do |i| %>
+          <div class="image-thumbnail"><img src="<%= "/abstract_images/00#{i}.jpg" %>" alt="<%= i %>" /></div>
+          <% end %>
+        </div>
+        <a href="javascript:;" class="select-image input-form">选择图片...</a>
         <div class="separator-fields"></div>
       </div>
       <div class="row-input-list">
@@ -57,20 +62,13 @@
 <% content_for :javascript do %>
   <%= javascript_include_tag 'http://res.wx.qq.com/open/js/jweixin-1.0.0.js' %>
   <script>
-    jQuery(document).ready(function(){
-      <%= wechat_config_tag(permissions: [:chooseImage]) %>
-      wx.ready(function(){
-        $('.select-image').on('click', function() {
-          wx.chooseImage({
-            success: function (data) {
-              $.each(data.localIds, function(index, value) {
-                alert(index + ": " + value);
-              });
-            }
-          });
-        });
+    jQuery(document).ready(function() {
+     $('.select-image').on('click', function() {
+        var html = $.map(['1', '2'], function(path, i) {
+          return '<div class="image-thumbnail">' + '<img src="' + path + '" alt="' + path + '" />' + '</div>'
+        }).join('');
+        $('.image-preview').html(html);
       });
     });
-  </script>
   </script>
 <% end %>
