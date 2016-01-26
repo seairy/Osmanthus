@@ -11,19 +11,24 @@ namespace :data do
   task populate: :environment do |t, args|
     bench = Benchmark.measure do
       traveller = User.create_faker(with_portrait: true)
-      1.upto(12).each do |month|
+      traveller.active!
+      3.upto(5).each do |month|
         traveller.travels.create!(departure_at: Time.local(2016, month, rand(1..10)), return_at: Time.local(2016, month, rand(20..27))).tap do |travel|
           travel.set_destinations!(Country.all.sample(rand(1..3)))
-          rand(1..15).times do
+          3.times do
             User.create_faker(with_portrait: true).tap do |user|
-              rand(1..5).times do
-                user.deals.create!({ travel: travel, content: "#{brands.sample} #{colors.sample} 货号#{Faker::Company.duns_number}", quantity: rand(1..3) }.merge(
+              user.active!
+              3.times do
+                deal = user.deals.create!({ travel: travel, content: "#{brands.sample} #{colors.sample} 货号#{Faker::Company.duns_number}", quantity: rand(1..3) }.merge(
                   case rand(1..3)
                   when 1 then {}
                   when 2 then { acceptable_price_value: rand(100..500) * 10 }
                   when 3 then { acceptable_price_value: rand(100..500) * 5, acceptable_price_currency_id: Currency.circulation_in(travel.destinations).sample.id }
                   end
                 ))
+                rand(0..9).times {
+                  deal.photographs.create!(type: :sample, file: fake_image_file)
+                }
               end
             end
           end

@@ -18,6 +18,16 @@
         <textarea id="deal_content" name="deal[content]" class="w-input input-form textarea"><%= @deal.content %></textarea>
         <div class="separator-fields"></div>
       </div>
+      <% unless @deal.photographs.blank? %>
+      <div class="row-input-list">
+        <label class="label-form" for="deal_content"><%= web_ar_t('deal.photographs') %></label>
+        <div class="value-form">
+          <p>#暂无修改图片功能</p>
+          <p>#给您造成的不便敬请谅解</p>
+        </div>
+        <div class="separator-fields"></div>
+      </div>
+      <% end %>
       <div class="row-input-list">
         <label class="label-form" for="deal_quantity"><%= web_ar_t('deal.quantity') %></label>
         <select id="deal_quantity" name="deal[quantity]" class="w-select input-form select">

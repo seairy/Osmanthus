@@ -18,6 +18,19 @@
         <div class="value-form"><%= @deal.content %></div>
         <div class="separator-fields"></div>
       </div>
+      <% unless @deal.photographs.blank? %>
+      <div class="row-input-list">
+        <label class="label-form" for="deal_quantity"><%= web_ar_t('deal.photographs') %></label>
+        <div class="value-form">
+          <div class="image-preview">
+            <% @deal.photographs.each do |photograph| %>
+            <div class="nailthumb-container image-thumbnail"><%= image_tag(photograph.file.w100_h100_fl_q60.url) %></div>
+            <% end %>
+          </div>
+        </div>
+        <div class="separator-fields"></div>
+      </div>
+      <% end %>
       <div class="row-input-list">
         <label class="label-form" for="deal_quantity"><%= web_ar_t('deal.quantity') %></label>
         <div class="value-form"><%= @deal.quantity %>件</div>
@@ -39,3 +52,10 @@
     <% end %>
   </div>
 </div>
+<% content_for :javascript do %>
+  <script>
+    jQuery(document).ready(function(){
+      $('.nailthumb-container:last').nailthumb();
+    });
+  </script>
+<% end %>
