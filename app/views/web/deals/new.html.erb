@@ -79,7 +79,7 @@
             success: function (res) {
               var html = '<div class="nailthumb-container image-thumbnail">' + '<img src="' + localId + '" alt="' + localId + '" /><input type="hidden" name="deal[photograph_media_ids][]" value="' + res.serverId + '" />' + '</div>';
               $('.image-preview').append(html);
-              $('.nailthumb-container').nailthumb();
+              $('.nailthumb-container:last').nailthumb();
               if(localIds.length > 0){
                 syncUpload(localIds);
               }
