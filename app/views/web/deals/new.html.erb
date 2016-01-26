@@ -72,6 +72,7 @@
                   success: function (res) {
                     var serverId = res.serverId;
                     var html = '<div class="nailthumb-container image-thumbnail">' + '<img src="' + path + '" alt="' + path + '" /><input type="hidden" name="deal[photograph_media_ids[]]" value="' + serverId + '" />' + '</div>';
+                    alert(html);
                     $('.image-preview').append(html);
                     $('.nailthumb-container').nailthumb();
                   }
