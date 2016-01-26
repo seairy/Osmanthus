@@ -19,7 +19,7 @@
           <% travel.deals.map(&:user).uniq.each do |user| %>
           <div class="profile">
             <%= image_tag(user.portrait.w100_h100_fl_q60.url) %>
-            <div class="deals"><span class="icon ion-edit"></span> x <%= user.deals.count %></div>
+            <div class="deals"><span class="icon ion-bag"></span> x <%= user.deals.count %></div>
           </div>
           <% end %>
           <% end %>
