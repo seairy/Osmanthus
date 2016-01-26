@@ -23,6 +23,7 @@ class Web::DealsController < Web::BaseController
   end
   
   def create
+    Rails.logger.info "***** photograph_media_ids: #{deal_params[:photograph_media_ids]}"
     @deal = @current_user.deals.new(deal_params.merge(travel: @travel))
     if @deal.save
       redirect_to [:web, @deal.travel]
