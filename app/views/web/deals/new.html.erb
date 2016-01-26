@@ -63,10 +63,9 @@
         $('.select-image').on('click', function() {
           wx.chooseImage({
             success: function (data) {
-              alert(jQuery.type(data.localIds));
-              // $.each(data.localIds.split(','), function(index, value) {
-              //   alert(index + ": " + value);
-              // });
+              $.each(data.localIds, function(index, value) {
+                alert(index + ": " + value);
+              });
             }
           });
         });
