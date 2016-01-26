@@ -20,11 +20,7 @@
       </div>
       <div class="row-input-list">
         <label class="label-form" for="deal_quantity"><%= web_ar_t('deal.photographs') %></label>
-        <div class="image-preview">
-          <% 1.upto(5).each do |i| %>
-          <div class="image-thumbnail"><img src="<%= "/abstract_images/00#{i}.jpg" %>" alt="<%= i %>" /></div>
-          <% end %>
-        </div>
+        <div class="image-preview"></div>
         <a href="javascript:;" class="select-image input-form">选择图片...</a>
         <div class="separator-fields"></div>
       </div>
