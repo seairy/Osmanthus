@@ -44,8 +44,27 @@
           <p class="n-p-l"><span class="icon ion-information-circled"> 您能接受的最高价格，留空则表示对价格无要求</span></p>
         </div>
       </div>
+      <a href="javascript:;" class="select-image">测试</a>
       <div class="separator-button-input"></div>
       <input type="submit" value="填写完成，提交" data-wait="请稍候..." class="w-button action-button"> 
     <% end %>
   </div>
 </div>
+<% content_for :javascript do %>
+  <%= javascript_include_tag 'http://res.wx.qq.com/open/js/jweixin-1.0.0.js' %>
+  <script>
+    jQuery(document).ready(function(){
+      <%= wechat_config_tag %>
+      wx.ready(function(){
+        $('.select-image').on('click', function() {
+          wx.chooseImage({
+            success: function (res) {
+              alert('dddd');
+            }
+          });
+        });
+      });
+    });
+  </script>
+  </script>
+<% end %>

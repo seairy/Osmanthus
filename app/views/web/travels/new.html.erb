@@ -40,3 +40,15 @@
     <% end %>
   </div>
 </div>
+<% content_for :javascript do %>
+  <script>
+    jQuery(document).ready(function(){
+      $('#travel_departure_at').on('change', function() {
+        var parts = $(this).val().split('-');
+        var date = new Date(parts[0], parts[1] - 1, parts[2]);
+        date.setDate(date.getDate() + 7);
+        $('#travel_return_at').val(date.getFullYear() + '-' + (("0" + (date.getMonth() + 1))).slice(-2) + '-' + ("0" + date.getDate()).slice(-2));
+      });
+    });
+  </script>
+<% end %>
