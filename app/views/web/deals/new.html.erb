@@ -63,7 +63,7 @@
         $('.select-image').on('click', function() {
           wx.chooseImage({
             success: function (data) {
-              alert(data.localIds);
+              alert(jQuery.type(data.localIds));
               // $.each(data.localIds.split(','), function(index, value) {
               //   alert(index + ": " + value);
               // });
