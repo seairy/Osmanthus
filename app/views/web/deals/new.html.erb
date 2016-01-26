@@ -65,20 +65,25 @@
           wx.chooseImage({
             success: function (data) {
               $('.image-preview').html('');
-              $.map(data.localIds, function(path, i) {
-                alert('path:' + path);
+              var images = {localIds: data.localIds, serverIds: []};
+              var i = 0; var length = images.localIds.length;
+              var upload = function() {
                 wx.uploadImage({
-                  localId: path,
+                  localId:images.localIds[i],
                   isShowProgressTips: 1,
-                  success: function (res) {
-                    var serverId = res.serverId;
-                    var html = '<div class="nailthumb-container image-thumbnail">' + '<img src="' + path + '" alt="' + path + '" /><input type="hidden" name="deal[photograph_media_ids[]]" value="' + serverId + '" />' + '</div>';
-                    alert(html);
+                  success: function(res) {
+                    images.serverId.push(res.serverId);
+                    var html = '<div class="nailthumb-container image-thumbnail">' + '<img src="' + images.localIds[i] + '" alt="' + images.localIds[i] + '" /><input type="hidden" name="deal[photograph_media_ids[]]" value="' + images.serverIds[i] + '" />' + '</div>';
                     $('.image-preview').append(html);
                     $('.nailthumb-container').nailthumb();
+                    i++;
+                    if (i < length) {
+                      upload();
+                    }
                   }
                 });
-              });
+              };
+              upload();
             }
           });
         });
