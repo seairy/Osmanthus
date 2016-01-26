@@ -9,7 +9,7 @@ class Web::DealsController < Web::BaseController
   
   def show
     if @deal.user.id == @current_user.id
-      render 'owner_show'
+      render 'owned_show'
     else
       render 'others_show'
     end
