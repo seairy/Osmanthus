@@ -62,7 +62,7 @@
         $('.image-thumbnail').on('click', function() {
           wx.previewImage({
             current: $(this).data('origin-url'),
-            urls: ['<%= @deal.photographs.map{|photograph| photograph.file.url}.join("', '") %>']
+            urls: ['<%= raw(@deal.photographs.map{|photograph| photograph.file.url}.join("', '")) %>']
           });
         });
       });
