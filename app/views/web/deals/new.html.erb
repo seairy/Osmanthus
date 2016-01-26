@@ -65,7 +65,7 @@
           wx.chooseImage({
             success: function (data) {
               $('.image-preview').html('');
-              var localIds = data.localIds;
+              var localIds = data.localIds.reverse();
               syncUpload(localIds);
             }
           });
