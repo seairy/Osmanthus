@@ -13,10 +13,10 @@ class Web::TravelsController < Web::BaseController
       @handled_deals_count, @total_deals_count = @deals.select{|deal| !deal.in_process?}.count, @deals.count
       @completion = ((@handled_deals_count.to_f / @total_deals_count.to_f) * 100).round(2)
       @completion = 0 if @completion.nan?
-      render 'owned_show'
+      render 'traveller_show'
     else
       set_previous_path
-      render 'others_show'
+      render 'buyer_show'
     end
   end
 
