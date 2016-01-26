@@ -68,6 +68,7 @@
               var images = {localIds: data.localIds, serverIds: []};
               var i = 0; var length = images.localIds.length;
               var upload = function() {
+                alert('i=' + i);
                 wx.uploadImage({
                   localId:images.localIds[i],
                   isShowProgressTips: 1,
