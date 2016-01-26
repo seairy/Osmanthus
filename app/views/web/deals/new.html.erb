@@ -72,9 +72,10 @@
                     var serverId = res.serverId;
                   }
                 });
-                return '<div class="image-thumbnail">' + '<img src="' + path + '" alt="' + path + '" />' + '</div>'
+                return '<div class="nailthumb-container image-thumbnail">' + '<img src="' + path + '" alt="' + path + '" />' + '</div>'
               });
               $('.image-preview').html(html);
+              $('.nailthumb-container').nailthumb();
             }
           });
         });
