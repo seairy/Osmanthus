@@ -63,6 +63,7 @@
       wx.ready(function(){
         $('.select-image').on('click', function() {
           wx.chooseImage({
+            sizeType: ['compressed'],
             success: function (data) {
               $('.image-preview').html('');
               var localIds = data.localIds.reverse();
