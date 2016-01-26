@@ -1,10 +1,11 @@
 class Deal < ActiveRecord::Base
   include Identifierable, AASM
-  attr_accessor :acceptable_price_value, :acceptable_price_currency_id
+  attr_accessor :photograph_media_ids, :acceptable_price_value, :acceptable_price_currency_id
   belongs_to :travel
   belongs_to :user
   belongs_to :acceptable_price, class_name: 'Price', dependent: :destroy
   belongs_to :actual_price, class_name: 'Price', dependent: :destroy
+  has_many :photographs, class_name: 'DealPhotograph'
   before_create :set_acceptable_price
   aasm column: 'state' do
     state :pending

@@ -64,18 +64,19 @@
         $('.select-image').on('click', function() {
           wx.chooseImage({
             success: function (data) {
-              var html = $.map(data.localIds, function(path, i) {
+              $('.image-preview').html('');
+              $.map(data.localIds, function(path, i) {
                 wx.uploadImage({
                   localId: path,
                   isShowProgressTips: 1,
                   success: function (res) {
                     var serverId = res.serverId;
+                    var html = '<div class="nailthumb-container image-thumbnail">' + '<img src="' + path + '" alt="' + path + '" /><input type="hidden" name="deal[photograph_media_ids[]]" value="' + serverId + '" />' + '</div>';
+                    $('.image-preview').append(html);
+                    $('.nailthumb-container').nailthumb();
                   }
                 });
-                return '<div class="nailthumb-container image-thumbnail">' + '<img src="' + path + '" alt="' + path + '" />' + '</div>'
               });
-              $('.image-preview').html(html);
-              $('.nailthumb-container').nailthumb();
             }
           });
         });
