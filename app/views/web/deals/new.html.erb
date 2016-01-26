@@ -77,7 +77,6 @@
             localId: localId,
             isShowProgressTips: 1,
             success: function (res) {
-              var serverId = ;
               var html = '<div class="nailthumb-container image-thumbnail">' + '<img src="' + localId + '" alt="' + localId + '" /><input type="hidden" name="deal[photograph_media_ids[]]" value="' + res.serverId + '" />' + '</div>';
                     $('.image-preview').append(html);
                     $('.nailthumb-container').nailthumb();
