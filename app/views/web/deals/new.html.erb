@@ -59,12 +59,19 @@
   <%= javascript_include_tag 'http://res.wx.qq.com/open/js/jweixin-1.0.0.js' %>
   <script>
     jQuery(document).ready(function(){
-      <%= wechat_config_tag(permissions: [:chooseImage]) %>
+      <%= wechat_config_tag(permissions: [:chooseImage, :previewImage, :uploadImage]) %>
       wx.ready(function(){
         $('.select-image').on('click', function() {
           wx.chooseImage({
             success: function (data) {
               var html = $.map(data.localIds, function(path, i) {
+                wx.uploadImage({
+                  localId: path,
+                  isShowProgressTips: 1,
+                  success: function (res) {
+                    var serverId = res.serverId;
+                  }
+                });
                 return '<div class="image-thumbnail">' + '<img src="' + path + '" alt="' + path + '" />' + '</div>'
               });
               $('.image-preview').html(html);
