@@ -24,6 +24,8 @@ class Deal < ActiveRecord::Base
       transitions from: :pending, to: :declined
     end
   end
+  validates :content, presence: true
+  validates :quantity, presence: true
 
   def update_acceptable_price!
     self.acceptable_price.try(:destroy!)

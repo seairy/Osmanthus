@@ -5,9 +5,6 @@ class Travel < ActiveRecord::Base
   has_many :destinations
   has_many :deals
   default_scope { includes(:deals) }
-  validates :departure_at, presence: true
-  validates :return_at, presence: true
-
   aasm column: 'state' do
     state :preparing, initial: true
     state :departured
@@ -19,6 +16,8 @@ class Travel < ActiveRecord::Base
       transitions from: :departured, to: :returned
     end
   end
+  validates :departure_at, presence: true
+  validates :return_at, presence: true
 
   def set_destinations! countries
     countries.each do |country|

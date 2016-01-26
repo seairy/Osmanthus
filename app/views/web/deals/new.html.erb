@@ -19,6 +19,11 @@
         <div class="separator-fields"></div>
       </div>
       <div class="row-input-list">
+        <label class="label-form" for="deal_quantity"><%= web_ar_t('deal.photographs') %></label>
+        <a href="javascript:;" class="select-image">选择图片</a>
+        <div class="separator-fields"></div>
+      </div>
+      <div class="row-input-list">
         <label class="label-form" for="deal_quantity"><%= web_ar_t('deal.quantity') %></label>
         <select id="deal_quantity" name="deal[quantity]" class="w-select input-form select">
           <% 1.upto(99).each do |quantity| %>
@@ -44,7 +49,6 @@
           <p class="n-p-l"><span class="icon ion-information-circled"> 您能接受的最高价格，留空则表示对价格无要求</span></p>
         </div>
       </div>
-      <a href="javascript:;" class="select-image">测试</a>
       <div class="separator-button-input"></div>
       <input type="submit" value="填写完成，提交" data-wait="请稍候..." class="w-button action-button"> 
     <% end %>
@@ -58,8 +62,8 @@
       wx.ready(function(){
         $('.select-image').on('click', function() {
           wx.chooseImage({
-            success: function (res) {
-              alert('dddd');
+            success: function (data) {
+              alert(data.localIds);
             }
           });
         });

@@ -227,5 +227,6 @@ zh:
         state/returned: 已回国
       deal:
         content: 商品详情
+        photographs: 照片
         quantity: 数量
         acceptable_price_value: 可接受价格
