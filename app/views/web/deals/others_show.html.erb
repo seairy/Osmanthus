@@ -24,7 +24,7 @@
         <div class="value-form">
           <div class="image-preview">
             <% @deal.photographs.each do |photograph| %>
-            <div class="nailthumb-container image-thumbnail"><%= image_tag(photograph.file.w100_h100_fl_q60.url) %></div>
+            <div class="nailthumb-container image-thumbnail" data-origin-url="<%= @deal.photographs.file.url %>"><%= image_tag(photograph.file.w100_h100_fl_q60.url) %></div>
             <% end %>
           </div>
         </div>
@@ -61,8 +61,8 @@
       wx.ready(function() {
         $('.image-thumbnail').on('click', function() {
           wx.previewImage({
-            current: '<%= @deal.photographs.first.file.w100_h100_fl_q60.url %>',
-            urls: ['<%= @deal.photographs.first.file.url %>']
+            current: $(this).data('origin-url'),
+            urls: ['<%= @deal.photographs.map{|photograph| photograph.file.url}.join("', '") %>']
           });
         });
       });
