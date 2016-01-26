@@ -23,7 +23,6 @@ class Web::DealsController < Web::BaseController
   end
   
   def create
-    Rails.logger.info "***** photograph_media_ids: [#{params[:photograph_media_ids]}]"
     @deal = @current_user.deals.new(deal_params.merge(travel: @travel))
     if @deal.save
       redirect_to [:web, @deal.travel]
@@ -66,7 +65,7 @@ class Web::DealsController < Web::BaseController
     end
 
     def find_deal
-      @deal = (@current_user.deals.where(id: params[:id]).first || Deal.where(travel_id: @current_user.travels.map(&:id)).where(id: params[:id]).first ||raise(ActiveRecord::RecordNotFound))
+      @deal = (@current_user.deals.where(id: params[:id]).first || Deal.where(travel_id: @current_user.travels.map(&:id)).where(id: params[:id]).first || raise(ActiveRecord::RecordNotFound))
     end
 
     def find_travel
