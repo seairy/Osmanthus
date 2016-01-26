@@ -58,10 +58,12 @@
     jQuery(document).ready(function(){
       <% unless @deal.photographs.blank? %>
       <%= wechat_config_tag(permissions: [:previewImage]) %>
-      wx.ready(function(){
-        wx.previewImage({
+      wx.ready(function() {
+        $('.image-thumbnail').on('click', function() {
+          wx.previewImage({
             current: '<%= @deal.photographs.first.file.w100_h100_fl_q60.url %>',
             urls: ['<%= @deal.photographs.first.file.url %>']
+          });
         });
       });
       <% end %>

@@ -12,12 +12,15 @@
     <% @travels.each do |travel| %>
     <li class="list-item-new">
       <a class="w-inline-block link-blog-list" href="<%= url_for([:web, travel]) %>" data-load="1">
-        <div class="image-new">
+        <div class="image-new w-clearfix">
           <% if travel.deals.blank? %>
           #代购清单是空的
           <% else %>
           <% travel.deals.map(&:user).uniq.each do |user| %>
-          <%= image_tag(user.portrait.w100_h100_fl_q60.url, class: 'portrait') %>
+          <div class="profile">
+            <%= image_tag(user.portrait.w100_h100_fl_q60.url) %>
+            <div class="deals"><span class="icon ion-edit"></span> x <%= user.deals.count %></div>
+          </div>
           <% end %>
           <% end %>
         </div>

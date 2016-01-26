@@ -120,10 +120,18 @@
   .list-item-new {
     .link-blog-list {
       .image-new {
-        .portrait {
-          margin-bottom: 4px;
-          width: 50px;
-          height: 50px;
+        .profile {
+          float: left;
+          margin: 0 4px 4px 0;
+          img {
+            width: 50px;
+            height: 50px;
+          }
+          .deals {
+            text-align: center;
+            font-size: 11px;
+            color: #888;
+          }
         }
       }
     }
