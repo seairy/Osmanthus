@@ -66,6 +66,7 @@
             success: function (data) {
               $('.image-preview').html('');
               $.map(data.localIds, function(path, i) {
+                alert('path:' + path);
                 wx.uploadImage({
                   localId: path,
                   isShowProgressTips: 1,
