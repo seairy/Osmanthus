@@ -24,7 +24,7 @@
         <div class="value-form">
           <div class="image-preview">
             <% @deal.photographs.each do |photograph| %>
-            <div class="nailthumb-container image-thumbnail" data-origin-url="<%= @deal.photographs.file.url %>"><%= image_tag(photograph.file.w100_h100_fl_q60.url) %></div>
+            <div class="nailthumb-container image-thumbnail" data-origin-url="<%= photograph.file.url %>"><%= image_tag(photograph.file.w100_h100_fl_q60.url) %></div>
             <% end %>
           </div>
         </div>
