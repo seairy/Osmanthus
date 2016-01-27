@@ -1,6 +1,6 @@
 class Deal < ActiveRecord::Base
   include Identifierable, AASM
-  attr_accessor :photograph_media_ids, :acceptable_price_value, :acceptable_price_currency_id
+  attr_accessor :photograph_media_ids, :acceptable_price_value, :acceptable_price_currency_id, :actual_price_value, :actual_price_currency_id
   belongs_to :travel
   belongs_to :user
   belongs_to :acceptable_price, class_name: 'Price', dependent: :destroy
@@ -27,12 +27,27 @@ class Deal < ActiveRecord::Base
     end
   end
   validates :content, presence: true
-  validates :quantity, presence: true
+  validates :expected_quantity, presence: true
 
   def update_acceptable_price!
     self.acceptable_price.try(:destroy!)
     self.set_acceptable_price
     self.save!
+  end
+
+  def buy attributes
+    actual_price_value = attributes[:actual_price_value].to_f
+    actual_price_currency = Currency.find(attributes[:actual_price_currency_id])
+    unless self.acceptable_price.blank?
+      if self.acceptable_price.currency.blank?
+        raise UnacceptablePrice.new if actual_price_currency.exchange_to_local(actual_price_value) > self.acceptable_price.in_local
+      else
+        raise DifferentCurrency.new if actual_price_currency.id != self.acceptable_price.currency.id
+        raise UnacceptablePrice.new if actual_price_value > self.acceptable_price.in_foreign
+      end
+    end
+    self.update!(attributes.merge(actual_price: Price.create!(currency: actual_price_currency, raw_value: actual_price_value)))
+    self.finish!
   end
 
   protected

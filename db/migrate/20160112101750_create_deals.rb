@@ -5,7 +5,8 @@ class CreateDeals < ActiveRecord::Migration
       t.references :travel, null: false
       t.references :user, null: false
       t.string :content, limit: 5000, null: false
-      t.integer :quantity, limit: 1, null: false
+      t.integer :expected_quantity, limit: 1, null: false
+      t.integer :actual_quantity, limit: 1
       t.references :acceptable_price
       t.references :actual_price
       t.string :state, limit: 20, null: false

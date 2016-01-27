@@ -20,11 +20,11 @@
       </div>
       <% unless @deal.photographs.blank? %>
       <div class="row-input-list">
-        <label class="label-form" for="deal_quantity"><%= web_ar_t('deal.photographs') %></label>
+        <label class="label-form" for="deal_expected_quantity"><%= web_ar_t('deal.photographs') %></label>
         <div class="value-form">
           <div class="image-preview">
             <% @deal.photographs.each do |photograph| %>
-            <div class="nailthumb-container image-thumbnail"><%= image_tag(photograph.file.w100_h100_fl_q60.url) %></div>
+            <div class="nailthumb-container image-thumbnail" data-origin-url="<%= photograph.file.url %>"><%= image_tag(photograph.file.w100_h100_fl_q60.url) %></div>
             <% end %>
           </div>
         </div>
@@ -32,8 +32,8 @@
       </div>
       <% end %>
       <div class="row-input-list">
-        <label class="label-form" for="deal_quantity"><%= web_ar_t('deal.quantity') %></label>
-        <div class="value-form"><%= @deal.quantity %>件</div>
+        <label class="label-form" for="deal_expected_quantity"><%= web_ar_t('deal.expected_quantity') %></label>
+        <div class="value-form"><%= @deal.expected_quantity %>件</div>
         <div class="separator-fields"></div>
       </div>
       <div class="row-input-list">
@@ -41,6 +41,7 @@
         <div class="value-form"><%= hr_deal_acceptable_price(@deal.acceptable_price) %></div>
       </div>
       <div class="separator-button-input"></div>
+      <% if @deal.in_process? %>
       <div class="w-row">
         <div class="w-col w-col-6 w-col-small-6 w-col-tiny-6 n-p-l">
           <%= link_to '修改需求', edit_web_deal_path(@deal), class: 'w-button edit-button' %>
@@ -49,12 +50,25 @@
           <%= link_to '删除', [:web, @deal], method: :delete, data: { confirm: '确定要删除吗？' }, class: 'w-button action-button' %>
         </div>
       </div>
+      <% end %>
     <% end %>
   </div>
 </div>
 <% content_for :javascript do %>
+  <%= javascript_include_tag 'http://res.wx.qq.com/open/js/jweixin-1.0.0.js' %>
   <script>
     jQuery(document).ready(function(){
+      <% unless @deal.photographs.blank? %>
+      <%= wechat_config_tag(permissions: [:previewImage]) %>
+      wx.ready(function() {
+        $('.image-thumbnail').on('click', function() {
+          wx.previewImage({
+            current: $(this).data('origin-url'),
+            urls: ['<%= raw(@deal.photographs.map{|photograph| photograph.file.url}.join("', '")) %>']
+          });
+        });
+      });
+      <% end %>
       $('.nailthumb-container:last').nailthumb();
     });
   </script>

@@ -226,7 +226,10 @@ zh:
         state/departured: 已出发
         state/returned: 已回国
       deal:
+        user: 好友
         content: 商品详情
         photographs: 照片
-        quantity: 数量
+        expected_quantity: 数量
+        actual_quantity: 实际数量
         acceptable_price_value: 可接受价格
+        actual_price_value: 实际价格

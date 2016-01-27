@@ -1,0 +1,63 @@
+<div class="w-nav navbar" data-collapse="all" data-animation="over-left" data-duration="400" data-contain="1" data-easing="ease-out-quint" data-no-scroll="1">
+  <div class="w-container">
+    <div class="wrapper-mask" data-ix="menu-mask"></div>
+    <div class="navbar-title">确认购买</div>
+    <a class="w-inline-block navbar-button" href="<%= url_for([:web, @deal]) %>" data-load="1">
+      <div class="navbar-button-icon icon ion-ios-arrow-left"></div>
+    </a>
+  </div>
+</div>
+<div class="body padding">
+  <div class="w-form">
+    <%= render "web/commons/error_messages", target: @deal %>
+    <%= form_for [:web, @deal], url: buy_web_deal_path(@deal) do |f| %>
+      <div class="separator-fields"></div>
+      <div class="separator-fields"></div>
+      <div class="row-input-list">
+        <label class="label-form" for="deal_content"><%= web_ar_t('deal.content') %></label>
+        <div class="value-form"><%= @deal.content %></div>
+        <div class="separator-fields"></div>
+      </div>
+      <div class="row-input-list">
+        <label class="label-form" for="deal_expected_quantity"><%= web_ar_t('deal.expected_quantity') %></label>
+        <div class="value-form"><%= @deal.expected_quantity %>件</div>
+        <div class="separator-fields"></div>
+      </div>
+      <div class="row-input-list">
+        <label class="label-form" for="deal_acceptable_price_value"><%= web_ar_t('deal.acceptable_price_value') %></label>
+        <div class="value-form"><%= hr_deal_acceptable_price(@deal.acceptable_price, with_local: true) %></div>
+        <div class="separator-fields"></div>
+      </div>
+      <div class="row-input-list">
+        <label class="label-form" for="deal_expected_quantity"><%= web_ar_t('deal.actual_quantity') %></label>
+        <select id="deal_actual_quantity" name="deal[actual_quantity]" class="w-select input-form select">
+          <% 1.upto(@deal.expected_quantity).each do |actual_quantity| %>
+          <option value="<%= actual_quantity %>"<%= ' selected' if actual_quantity == @deal.expected_quantity %>><%= actual_quantity %>件</option>
+          <% end %>
+        </select>
+        <div class="separator-fields"></div>
+      </div>
+      <div class="row-input-list">
+        <label class="label-form" for="deal_actual_price_value"><%= web_ar_t('deal.actual_price_value') %></label>
+        <div class="w-row">
+          <div class="w-col w-col-6 w-col-small-6 w-col-tiny-6 n-p-l">
+            <input type="text" id="deal_actual_price_value" name="deal[actual_price_value]" data-name="deal_actual_price_value" class="w-input input-form">
+          </div>
+          <div class="w-col w-col-6 w-col-small-6 w-col-tiny-6 n-p-r">
+            <select id="deal_actual_price_currency_id" name="deal[actual_price_currency_id]" class="w-select input-form select">
+              <% if @deal.acceptable_price.try(:currency).blank? %>
+              <% Currency.circulation_in(@deal.travel.destinations).each do |currency| %>
+              <option value="<%= currency.id %>"<%= ' selected' if currency.id == @deal.acceptable_price.try(:currency).try(:id) %>><%= currency.name_with_code %></option>
+              <% end %>
+              <% else %>
+              <option value="<%= @deal.acceptable_price.currency.id %>" selected><%= @deal.acceptable_price.currency.name_with_code %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="separator-button-input"></div>
+      <input type="submit" value="确认购买" data-wait="请稍候..." class="w-button action-button"> 
+    <% end %>
+  </div>
+</div>

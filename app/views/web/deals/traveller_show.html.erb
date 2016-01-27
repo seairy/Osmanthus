@@ -14,13 +14,18 @@
       <div class="separator-fields"></div>
       <div class="separator-fields"></div>
       <div class="row-input-list">
+        <label class="label-form" for="deal_content"><%= web_ar_t('deal.user') %></label>
+        <div class="value-form"><%= image_tag(@deal.user.portrait.w100_h100_fl_q60.url, class: 'portrait') %><%= @deal.user.nickname %></div>
+        <div class="separator-fields"></div>
+      </div>
+      <div class="row-input-list">
         <label class="label-form" for="deal_content"><%= web_ar_t('deal.content') %></label>
         <div class="value-form"><%= @deal.content %></div>
         <div class="separator-fields"></div>
       </div>
       <% unless @deal.photographs.blank? %>
       <div class="row-input-list">
-        <label class="label-form" for="deal_quantity"><%= web_ar_t('deal.photographs') %></label>
+        <label class="label-form" for="deal_expected_quantity"><%= web_ar_t('deal.photographs') %></label>
         <div class="value-form">
           <div class="image-preview">
             <% @deal.photographs.each do |photograph| %>
@@ -32,23 +37,40 @@
       </div>
       <% end %>
       <div class="row-input-list">
-        <label class="label-form" for="deal_quantity"><%= web_ar_t('deal.quantity') %></label>
-        <div class="value-form"><%= @deal.quantity %>件</div>
+        <label class="label-form" for="deal_expected_quantity"><%= web_ar_t('deal.expected_quantity') %></label>
+        <div class="value-form"><%= @deal.expected_quantity %>件</div>
         <div class="separator-fields"></div>
       </div>
       <div class="row-input-list">
         <label class="label-form" for="deal_acceptable_price_value"><%= web_ar_t('deal.acceptable_price_value') %></label>
         <div class="value-form"><%= hr_deal_acceptable_price(@deal.acceptable_price, with_local: true) %></div>
+        <div class="separator-fields"></div>
       </div>
+      <% if @deal.in_process? %>
       <div class="separator-button-input"></div>
       <div class="w-row">
         <div class="w-col w-col-6 w-col-small-6 w-col-tiny-6 n-p-l">
-          <%= link_to '确认购买', finish_web_deal_path(@deal), method: :put, data: { confirm: '确认买到了商品吗？' }, class: 'w-button edit-button' %>
+          <%= link_to '确认购买', buy_form_web_deal_path(@deal), class: 'w-button edit-button' %>
         </div>
         <div class="w-col w-col-6 w-col-small-6 w-col-tiny-6 n-p-r">
           <%= link_to '确认无货', abort_web_deal_path(@deal), method: :put, data: { confirm: '确认无法购买商品吗？' }, class: 'w-button action-button' %>
         </div>
       </div>
+      <% elsif @deal.success? %>
+      <div class="row-input-list">
+        <label class="label-form" for="deal_expected_quantity"><%= web_ar_t('deal.actual_quantity') %></label>
+        <div class="value-form"><%= @deal.actual_quantity %>件</div>
+        <div class="separator-fields"></div>
+      </div>
+      <div class="row-input-list">
+        <label class="label-form" for="deal_acceptable_price_value"><%= web_ar_t('deal.actual_price_value') %></label>
+        <div class="value-form"><%= hr_deal_acceptable_price(@deal.actual_price, with_local: true) %></div>
+        <div class="separator-fields"></div>
+      </div>
+      <%= link_to '返回', [:web, @deal.travel], disabled: true, class: 'w-button edit-button' %>
+      <% elsif @deal.failure? %>
+
+      <% end %>
     <% end %>
   </div>
 </div>

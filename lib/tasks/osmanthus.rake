@@ -19,14 +19,14 @@ namespace :data do
             User.create_faker(with_portrait: true).tap do |user|
               user.active!
               3.times do
-                deal = user.deals.create!({ travel: travel, content: "#{brands.sample} #{colors.sample} 货号#{Faker::Company.duns_number}", quantity: rand(1..3) }.merge(
+                deal = user.deals.create!({ travel: travel, content: "#{brands.sample} #{colors.sample} 货号#{Faker::Company.duns_number}", expected_quantity: rand(1..3) }.merge(
                   case rand(1..3)
                   when 1 then {}
                   when 2 then { acceptable_price_value: rand(100..500) * 10 }
                   when 3 then { acceptable_price_value: rand(100..500) * 5, acceptable_price_currency_id: Currency.circulation_in(travel.destinations).sample.id }
                   end
                 ))
-                rand(0..9).times {
+                rand(1..3).times {
                   deal.photographs.create!(type: :sample, file: fake_image_file)
                 }
               end

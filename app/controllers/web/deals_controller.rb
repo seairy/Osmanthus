@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class Web::DealsController < Web::BaseController
-  before_action :find_deal, only: %w(show edit update destroy finish abort)
+  before_action :find_deal, only: %w(show edit update destroy buy_form buy abort)
   before_action :find_travel, only: %w(new create)
   
   def index
@@ -36,7 +36,7 @@ class Web::DealsController < Web::BaseController
       @deal.update_acceptable_price!
       redirect_to [:web, @deal.travel]
     else
-      render action: 'edit'
+      
     end
   end
 
@@ -49,9 +49,29 @@ class Web::DealsController < Web::BaseController
     @deals = @current_user.deals.order(created_at: :desc).page(params[:page])
   end
 
-  def finish
-    @deal.finish!
-    redirect_to [:web, @deal.travel]
+  def buy_form
+  end
+
+  def buy
+    begin
+      raise InvalidActualPriceCurrency.new if deal_params[:actual_price_currency_id].blank?
+      actual_price_value = deal_params[:actual_price_value].try(:to_f)
+      raise InvalidActualPrice.new if actual_price_value.blank? or actual_price_value <= 0
+      @deal.buy(deal_params)
+      redirect_to [:web, @deal.travel]
+    rescue InvalidActualPriceCurrency
+      @deal.errors.add(:base, '请选择货币种类')
+      render action: 'buy_form'
+    rescue InvalidActualPrice
+      @deal.errors.add(:base, '请填写实际购买价格')
+      render action: 'buy_form'
+    rescue DifferentCurrency
+      @deal.errors.add(:base, '请选择正确的货币种类')
+      render action: 'buy_form'
+    rescue UnacceptablePrice
+      @deal.errors.add(:base, '实际价格不能高于可接受价格')
+      render action: 'buy_form'
+    end
   end
 
   def abort

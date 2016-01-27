@@ -11,8 +11,8 @@ class Web::TravelsController < Web::BaseController
     if @travel.user.id == @current_user.id
       @deals = @travel.deals.order("FIELD(state, 'in_process', 'success', 'failure')").order(created_at: :desc)
       @handled_deals_count, @total_deals_count = @deals.select{|deal| !deal.in_process?}.count, @deals.count
-      @completion = ((@handled_deals_count.to_f / @total_deals_count.to_f) * 100).round(2)
-      @completion = 0 if @completion.nan?
+      @completion = ((@handled_deals_count.to_f / @total_deals_count.to_f) * 100)
+      @completion = @completion.nan? ? 0 : @completion.round
       render 'traveller_show'
     else
       set_previous_path

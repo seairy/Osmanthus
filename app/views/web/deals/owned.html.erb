@@ -1,31 +1,19 @@
 <div class="w-nav navbar" data-collapse="all" data-animation="over-left" data-duration="400" data-contain="1" data-easing="ease-out-quint" data-no-scroll="1">
   <div class="w-container">
     <div class="wrapper-mask" data-ix="menu-mask"></div>
-    <div class="navbar-title"><%= @travel.user.nickname %>的行程</div>
-    <a class="w-inline-block navbar-button" href="<%= url_for(owned_web_travels_path) %>" data-load="1">
+    <div class="navbar-title">我的需求</div>
+    <a class="w-inline-block navbar-button" href="<%= url_for(web_home_path) %>" data-load="1">
       <div class="navbar-button-icon icon ion-ios-arrow-left"></div>
     </a>
   </div>
 </div>
 <div class="body">
-  <div class="w-clearfix grey-header">
-    <h2 class="grey-heading-title">TA的行程</h2>
-  </div>
-  <div class="w-clearfix travel-description padding">
-    <%= image_tag(@travel.user.portrait.w100_h100_fl_q60.url || 'web/user_portrait.jpg', class: 'portrait') %>
-    <div class="description">
-      <p>您的微信好友<span class="strong"><%= @travel.user.nickname %></span>将于<span class="strong"><%= @travel.departure_at.strftime('%Y年%m月%d日') %></span>前往<span class="strong"><%= hr_travel_destinations(@travel.destinations)%></span>旅游，并于<span class="strong"><%= @travel.return_at.strftime('%Y年%m月%d日') %></span>回国，您现在可以在此发布代购需求。</p>
-    </div>
-  </div>
-  <div class="w-clearfix grey-header">
-    <h2 class="grey-heading-title">我的清单</h2>
-  </div>
   <div class="w-clearfix travel-deals-list padding">
-    <% if @travel.deals.blank? %>
+    <% if @deals.blank? %>
     <div class="blank-notice"><p>清单是空的哦！</p></div>
     <% else %>
     <ul class="list list-events">
-      <% @travel.deals.where(user_id: @current_user.id).order(created_at: :desc).each do |deal| %>
+      <% @deals.each do |deal| %>
       <li class="list-calendar-events" data-ix="list-item">
         <a class="w-clearfix w-inline-block" href="<%= url_for([:web, deal])%>" data-load="1">
           <div class="calendar-col-left">
@@ -46,6 +34,5 @@
       <% end %>
     </ul>
     <% end %>
-    <%= link_to '发布新需求', new_web_travel_deal_path(@travel), class: 'submit-button action-button' %>
   </div>
 </div>

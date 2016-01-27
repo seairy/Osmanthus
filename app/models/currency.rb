@@ -5,6 +5,10 @@ class Currency < ActiveRecord::Base
     "#{name}(#{iso_code})"
   end
 
+  def exchange_to_local foreign_price
+    (foreign_price / self.rate_of_exchange).round
+  end
+
   class << self
     def circulation_in destinations
       destinations.map do |destination|

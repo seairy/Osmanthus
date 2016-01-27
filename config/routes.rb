@@ -19,7 +19,8 @@ Rails.application.routes.draw do
         get :owned
       end
       member do
-        put :finish
+        get :buy_form
+        patch :buy
         put :abort
       end
     end

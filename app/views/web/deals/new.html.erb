@@ -19,16 +19,16 @@
         <div class="separator-fields"></div>
       </div>
       <div class="row-input-list">
-        <label class="label-form" for="deal_quantity"><%= web_ar_t('deal.photographs') %></label>
+        <label class="label-form" for="deal_expected_quantity"><%= web_ar_t('deal.photographs') %></label>
         <div class="image-preview"></div>
         <a href="javascript:;" class="select-image input-form">选择图片...</a>
         <div class="separator-fields"></div>
       </div>
       <div class="row-input-list">
-        <label class="label-form" for="deal_quantity"><%= web_ar_t('deal.quantity') %></label>
-        <select id="deal_quantity" name="deal[quantity]" class="w-select input-form select">
-          <% 1.upto(99).each do |quantity| %>
-          <option value="<%= quantity %>"><%= quantity %>件</option>
+        <label class="label-form" for="deal_expected_quantity"><%= web_ar_t('deal.expected_quantity') %></label>
+        <select id="deal_expected_quantity" name="deal[expected_quantity]" class="w-select input-form select">
+          <% 1.upto(99).each do |expected_quantity| %>
+          <option value="<%= expected_quantity %>"><%= expected_quantity %>件</option>
           <% end %>
         </select>
         <div class="separator-fields"></div>
