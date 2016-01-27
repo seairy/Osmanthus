@@ -2,7 +2,7 @@
   <div class="w-container">
     <div class="wrapper-mask" data-ix="menu-mask"></div>
     <div class="navbar-title">需求详情</div>
-    <a class="w-inline-block navbar-button" href="<%= url_for([:web, @deal.travel]) %>" data-load="1">
+    <a class="w-inline-block navbar-button" href="<%= params[:from] == 'owned_deals' ? url_for(owned_web_deals_path) : url_for([:web, @deal.travel]) %>" data-load="1">
       <div class="navbar-button-icon icon ion-ios-arrow-left"></div>
     </a>
   </div>

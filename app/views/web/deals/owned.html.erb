@@ -15,17 +15,19 @@
     <ul class="list list-events">
       <% @deals.each do |deal| %>
       <li class="list-calendar-events" data-ix="list-item">
-        <a class="w-clearfix w-inline-block" href="<%= url_for([:web, deal])%>" data-load="1">
+        <a class="w-clearfix w-inline-block" href="<%= url_for(web_deal_path(deal, from: 'owned_deals'))%>" data-load="1">
           <div class="calendar-col-left">
             <div class="event-title"><%= deal.content %></div>
             <div class="w-clearfix text-event-wrap">
-              <div class="left-text-icon icon ion-pricetags"></div>
-              <div class="event-text"><%= deal.expected_quantity %>件</div>
-              <div class="left-text-icon icon ion-calculator"></div>
-              <div class="event-text"><%= hr_deal_acceptable_price(deal.acceptable_price) %></div>
-              <% unless deal.photographs.blank? %>
-              <div class="left-text-icon icon ion-images"></div>
-              <div class="event-text">有图片</div>
+              <% if deal.in_process? %>
+              <div class="left-text-icon icon ion-clock"></div>
+              <div class="event-text">购物中</div>
+              <% elsif deal.success? %>
+              <div class="left-text-icon icon ion-checkmark-round text-success"></div>
+              <div class="event-text text-success">已购买</div>
+              <% elsif deal.failure? %>
+              <div class="left-text-icon icon ion-close-round text-failure"></div>
+              <div class="event-text text-failure">未购买</div>
               <% end %>
             </div>
           </div>
