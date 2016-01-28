@@ -1,0 +1,50 @@
+<div class="w-nav navbar" data-collapse="all" data-animation="over-left" data-duration="400" data-contain="1" data-easing="ease-out-quint" data-no-scroll="1">
+  <div class="w-container">
+    <div class="wrapper-mask" data-ix="menu-mask"></div>
+    <div class="navbar-title">TA的行程</div>
+    <a class="w-inline-block navbar-button" href="<%= url_for(web_home_path) %>" data-load="1">
+      <div class="navbar-button-icon icon ion-ios-arrow-left"></div>
+    </a>
+  </div>
+</div>
+<div class="news-container">
+  <ul class="w-clearfix list-news">
+    <% @travels.each do |travel| %>
+    <li class="list-item-new">
+      <a class="w-inline-block link-blog-list" href="<%= url_for([:web, travel]) %>" data-load="1">
+        <div class="image-new w-clearfix">
+          <% if travel.deals.blank? %>
+          #代购清单是空的
+          <% else %>
+          <% travel.deals.map(&:user).uniq.each do |user| %>
+          <div class="profile">
+            <%= image_tag(user.portrait.w100_h100_fl_q60.url) %>
+            <div class="deals"><span class="icon ion-bag"></span> x <%= user.deals.count %></div>
+          </div>
+          <% end %>
+          <% end %>
+        </div>
+        <div class="text-new">
+          <div><span class="category-link">目的地</span><span class="description-new"><%= hr_travel_destinations(travel.destinations)%></span></div>
+          <div><span class="category-link">出行日期</span><span class="description-new"><%= travel.departure_at.strftime('%Y年%m月%d日') %> - <%= travel.return_at.strftime('%m月%d日') %></span></div>
+          <div><span class="category-link">状态</span><span class="description-new"><%= travel.aasm.human_state %></span></div>
+        </div>
+      </a> 
+    </li>
+    <% end %>
+  </ul>
+</div>
+<div class="w-clearfix options-new less-padding-sides-blog border-top">
+  <a class="w-clearfix w-inline-block small-button grey" href="#">
+    <div class="icon-button bigger">
+      <div class="icon ion-ios-arrow-left"></div>
+    </div>
+    <div class="text-button">上一页</div>
+  </a>
+  <a class="w-clearfix w-inline-block small-button grey last right" href="#">
+    <div class="icon-button bigger">
+      <div class="icon ion-ios-arrow-right"></div>
+    </div>
+    <div class="text-button">下一页</div>
+  </a>
+</div>

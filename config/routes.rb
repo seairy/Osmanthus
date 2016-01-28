@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount API => '/'
   root to: 'web/home#index'
   namespace :web do
     root 'base#verify', via: [:get, :post]

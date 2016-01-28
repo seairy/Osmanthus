@@ -7,11 +7,19 @@ class Wechat::Base < ActiveRecord::Base
 
   class << self
     def access_token
-      global_variable(:access_token)
+      if Rails.env.production?
+        global_variable(:access_token)
+      else
+        
+      end
     end
 
     def jsapi_ticket
-      global_variable(:jsapi_ticket)
+      if Rails.env.production?
+        global_variable(:jsapi_ticket)
+      else
+        
+      end
     end
 
     def find_access_token
